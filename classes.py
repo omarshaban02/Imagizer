@@ -96,7 +96,6 @@ class Filter:
 
         laplace_result = convolve2d(img, laplace_kernel, mode='same', boundary='symm')
 
-
         # Convert to uint8 to ensure correct data type for image display and saving
         laplace_result = laplace_result.astype(np.uint8)
 
@@ -129,10 +128,27 @@ class FourierTransform:
         return img_fft * mask
 
     def high_pass_filter(self, img_fft, threshold, gain):
-        mask = np.ones_like(img_fft)
+        mask = np.ones_like(img_fft) * gain
         rows, cols = img_fft.shape
         center_row, center_col = rows // 2, cols // 2
-        mask[center_row - threshold:center_row + threshold,
-        center_col - threshold:center_col + threshold] = 1 - gain
+        mask[center_row - threshold:center_row + threshold, center_col - threshold:center_col + threshold] = 0
+
         return img_fft * mask
+
+
+def add_salt_and_pepper_noise(image, salt_prob, pepper_prob):
+    noisy_image = np.copy(image)
+    total_pixels = image.size
+
+    # Add salt noise
+    salt_pixels = int(total_pixels * salt_prob)
+    salt_coordinates = [np.random.randint(0, i - 1, salt_pixels) for i in image.shape]
+    noisy_image[salt_coordinates[0], salt_coordinates[1]] = 255
+
+    # Add pepper noise
+    pepper_pixels = int(total_pixels * pepper_prob)
+    pepper_coordinates = [np.random.randint(0, i - 1, pepper_pixels) for i in image.shape]
+    noisy_image[pepper_coordinates[0], pepper_coordinates[1]] = 0
+
+    return noisy_image
 
