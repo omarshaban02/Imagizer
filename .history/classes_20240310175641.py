@@ -158,12 +158,7 @@ def add_uniform_noise(image, intensity = 50):
     Args:
         image (numpy.ndarry): Input image.
         intensity (int): Intensity of uniform noise.
-        
-    Returns:
-        noisy_image (numpy.ndarray): The image after applying noise modifier.
-        
     """
-    
     noisy_image = np.copy(image)
     noise = np.random.uniform(-intensity, intensity, image.shape).astype('uint8')
     noisy_image = cv2.add(image, noise)

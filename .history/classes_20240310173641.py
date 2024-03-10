@@ -152,23 +152,3 @@ def add_salt_and_pepper_noise(image, salt_prob, pepper_prob):
 
     return noisy_image
 
-def add_uniform_noise(image, intensity = 50):
-    """Add uniform noise to an image.
-
-    Args:
-        image (numpy.ndarry): Input image.
-        intensity (int): Intensity of uniform noise.
-        
-    Returns:
-        noisy_image (numpy.ndarray): The image after applying noise modifier.
-        
-    """
-    
-    noisy_image = np.copy(image)
-    noise = np.random.uniform(-intensity, intensity, image.shape).astype('uint8')
-    noisy_image = cv2.add(image, noise)
-    
-    return noisy_image
-    
-    
-
