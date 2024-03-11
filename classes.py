@@ -102,6 +102,48 @@ class Filter:
         return laplace_result
 
 
+
+    def global_threshold(image, threshold_value=127, max_value=255):
+        """
+        Apply global thresholding to a grayscale image.
+
+        Parameters:
+            image (numpy.ndarray): Input grayscale image.
+            threshold_value (int): Threshold value.
+            max_value (int): Maximum value for pixels above the threshold.
+
+        Returns:
+            numpy.ndarray: Thresholded image.
+        """
+        thresholded = np.where(image > threshold_value, max_value, 0).astype(np.uint8)
+        return thresholded
+
+    def local_threshold(image, blockSize=11, C=2, max_value=255):
+        """
+        Apply local thresholding to a grayscale image.
+
+        Parameters:
+            image (numpy.ndarray): Input grayscale image.
+            blockSize (int): Size of the local neighborhood for computing the threshold value.
+            C (int): Constant subtracted from the mean or weighted mean.
+            max_value (int): Maximum value for pixels above the threshold.
+
+        Returns:
+            numpy.ndarray: Thresholded image.
+        """
+        thresholded = np.zeros_like(image, dtype=np.uint8)
+        for i in range(image.shape[0]):
+            for j in range(image.shape[1]):
+                # Define the region of interest
+                roi = image[max(0, i - blockSize // 2): min(image.shape[0], i + blockSize // 2),
+                            max(0, j - blockSize // 2): min(image.shape[1], j + blockSize // 2)]
+                # Compute the threshold value for the region
+                threshold_value = np.mean(roi) - C
+                # Apply thresholding
+                thresholded[i, j] = max_value if image[i, j] > threshold_value else 0
+        return thresholded
+
+
 class FourierTransform:
     def __init__(self):
         pass
