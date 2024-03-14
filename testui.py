@@ -14,18 +14,283 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(989, 700)
+        MainWindow.resize(1159, 786)
+        MainWindow.setStyleSheet("QWidget {\n"
+"  background-color: #19232D;\n"
+"  border: 0px solid #455364;\n"
+"  padding: 0px;\n"
+"  color: #E0E1E3;\n"
+"  selection-background-color: #346792;\n"
+"  selection-color: #E0E1E3;\n"
+"    font-family : Ubuntu;\n"
+"font-size: 20px;\n"
+"font-weight: bold;\n"
+"}\n"
+"\n"
+"QWidget:disabled {\n"
+"  background-color: #19232D;\n"
+"  color: #9DA9B5;\n"
+"  selection-background-color: #26486B;\n"
+"  selection-color: #9DA9B5;\n"
+"}\n"
+"\n"
+"QWidget::item:selected {\n"
+"  background-color: #176B87;\n"
+"}\n"
+"\n"
+"QWidget::item:hover:!selected {\n"
+"  background-color: rgba(23, 107, 135,50%);\n"
+"}\n"
+"\n"
+"QMainWindow::separator {\n"
+"  background-color: #455364;\n"
+"  border: 0px solid #19232D;\n"
+"  spacing: 0px;\n"
+"  padding: 2px;\n"
+"}\n"
+"\n"
+"QMainWindow::separator:hover {\n"
+"  background-color: #60798B;\n"
+"  border: 0px solid #1A72BB;\n"
+"}\n"
+"\n"
+"/*-------------------------------------------------------------------------------------------*/\n"
+"\n"
+"QCheckBox {\n"
+"  background-color: #FAFAFA;\n"
+"  color: #19232D;\n"
+"  spacing: 4px;\n"
+"  outline: none;\n"
+"  padding-top: 4px;\n"
+"  padding-bottom: 4px;\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"QCheckBox QWidget:disabled {\n"
+"  background-color: #FAFAFA;\n"
+"  color: #788D9C;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"  margin-left: 2px;\n"
+"  height: 14px;\n"
+"  width: 14px;\n"
+"}\n"
+"\n"
+"/*-------------------------------------------------------------------------------------------*/\n"
+"QScrollBar:horizontal {\n"
+"  height: 16px;\n"
+"  margin: 2px 16px 2px 16px;\n"
+"  border: 1px solid white;\n"
+"  border-radius: 4px;\n"
+"  background-color: rgb(25, 35, 45);\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"  background-color: #176B87;\n"
+"  border: 1px solid #C9CDD0;\n"
+"  border-radius: 4px;\n"
+"  min-width: 8px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"  background-color: rgba(23, 107, 135,80%);\n"
+"  border:#4169E1;\n"
+"  border-radius: 4px;\n"
+"  min-width: 8px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal:focus {\n"
+"  border: 1px solid red;\n"
+"}\n"
+"QScrollBar:vertical {\n"
+"  background-color: rgb(25, 35, 45);\n"
+"  width: 16px;\n"
+"  margin: 16px 2px 16px 2px;\n"
+"  border: 1px solid white;\n"
+"  border-radius: 4px;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"  background-color: #176B87;\n"
+"  border: 1px solid #C9CDD0;\n"
+"  min-height: 8px;\n"
+"  border-radius: 4px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical:hover {\n"
+"  background-color: rgba(23, 107, 135,80%);\n"
+"  border: #9FCBFF;\n"
+"  border-radius: 4px;\n"
+"  min-height: 8px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical:focus {\n"
+"  border: 1px solid #73C7FF;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"  margin: 0px 0px 0px 0px;\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_right_disabled.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: right;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal:hover, QScrollBar::add-line:horizontal:on {\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_right.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: right;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"  margin: 3px 0px 3px 0px;\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_down_disabled.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: bottom;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_down.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: bottom;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"  margin: 0px 3px 0px 3px;\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_left_disabled.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: left;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal:hover, QScrollBar::sub-line:horizontal:on {\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_left.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: left;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"  margin: 3px 0px 3px 0px;\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_up_disabled.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: top;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {\n"
+"  border-image: url(\"qss_icons/light/rc/arrow_up.png\");\n"
+"  height: 12px;\n"
+"  width: 12px;\n"
+"  subcontrol-position: top;\n"
+"  subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {\n"
+"  background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"  background: none;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"  background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"  background: none;\n"
+"}\n"
+"\n"
+"/*----------------------------------------------------------------------------------------*/\n"
+"QPushButton{\n"
+" /*border:2px solid #05B8CC;*/\n"
+" background-color: #176B87;\n"
+" color:rgb(255, 255, 255);\n"
+" border-radius: 10px;\n"
+" font-weight:bold;\n"
+" font-size:16px;\n"
+"  transition: 500ms;\n"
+"}\n"
+"\n"
+"QPushButton::hover{\n"
+" border: 1px solid #176B87;\n"
+" background-color: rgba(23, 107, 135,80%)\n"
+"}\n"
+"QPushButton:pressed {\n"
+" margin:1px 2px;\n"
+" font-size: 15px;\n"
+"}\n"
+"/*----------------------------------------------------------------------------------------*/\n"
+"QTabWidget::header{\n"
+"background-color: #19232D;\n"
+"  border: 0px solid #455364;\n"
+"  padding: 0px;\n"
+"  color: #E0E1E3;\n"
+"  selection-background-color: #346792;\n"
+"  selection-color: #E0E1E3;\n"
+"    font-family : Ubuntu;\n"
+"font-size: 20px;\n"
+"font-weight: bold; \n"
+"}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
+        self.tabWidget.setStyleSheet("")
+        self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
+        self.tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
+        self.tabWidget.setElideMode(QtCore.Qt.ElideNone)
+        self.tabWidget.setDocumentMode(False)
         self.tabWidget.setObjectName("tabWidget")
         self.tab_filter = QtWidgets.QWidget()
         self.tab_filter.setObjectName("tab_filter")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.tab_filter)
         self.gridLayout_6.setObjectName("gridLayout_6")
+        self.wgt_input_img_greyscale = PlotWidget(self.tab_filter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_input_img_greyscale.sizePolicy().hasHeightForWidth())
+        self.wgt_input_img_greyscale.setSizePolicy(sizePolicy)
+        self.wgt_input_img_greyscale.setStyleSheet("background:green")
+        self.wgt_input_img_greyscale.setObjectName("wgt_input_img_greyscale")
+        self.gridLayout_6.addWidget(self.wgt_input_img_greyscale, 1, 1, 1, 1)
+        self.wgt_input_img = PlotWidget(self.tab_filter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_input_img.sizePolicy().hasHeightForWidth())
+        self.wgt_input_img.setSizePolicy(sizePolicy)
+        self.wgt_input_img.setStyleSheet("background:green")
+        self.wgt_input_img.setObjectName("wgt_input_img")
+        self.gridLayout_6.addWidget(self.wgt_input_img, 0, 1, 1, 1)
+        self.wgt_output_img = PlotWidget(self.tab_filter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_output_img.sizePolicy().hasHeightForWidth())
+        self.wgt_output_img.setSizePolicy(sizePolicy)
+        self.wgt_output_img.setStyleSheet("background:green")
+        self.wgt_output_img.setObjectName("wgt_output_img")
+        self.gridLayout_6.addWidget(self.wgt_output_img, 0, 2, 2, 1)
         self.toolBox = QtWidgets.QToolBox(self.tab_filter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -34,11 +299,47 @@ class Ui_MainWindow(object):
         self.toolBox.setSizePolicy(sizePolicy)
         self.toolBox.setObjectName("toolBox")
         self.noise = QtWidgets.QWidget()
-        self.noise.setGeometry(QtCore.QRect(0, 0, 316, 505))
+        self.noise.setGeometry(QtCore.QRect(0, 0, 374, 554))
         self.noise.setObjectName("noise")
-        self.gridLayout = QtWidgets.QGridLayout(self.noise)
+        self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.noise)
+        self.verticalLayout_18.setObjectName("verticalLayout_18")
+        self.groupBox = QtWidgets.QGroupBox(self.noise)
+        self.groupBox.setObjectName("groupBox")
+        self.gridLayout = QtWidgets.QGridLayout(self.groupBox)
+        self.gridLayout.setContentsMargins(-1, 25, -1, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.stackedWidget = QtWidgets.QStackedWidget(self.noise)
+        self.frame_5 = QtWidgets.QFrame(self.groupBox)
+        self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_5.setObjectName("frame_5")
+        self.gridLayout_13 = QtWidgets.QGridLayout(self.frame_5)
+        self.gridLayout_13.setContentsMargins(-1, 9, -1, 0)
+        self.gridLayout_13.setObjectName("gridLayout_13")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.radio_uniform = QtWidgets.QRadioButton(self.frame_5)
+        self.radio_uniform.setChecked(False)
+        self.radio_uniform.setObjectName("radio_uniform")
+        self.buttonGroup_noise = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup_noise.setObjectName("buttonGroup_noise")
+        self.buttonGroup_noise.addButton(self.radio_uniform)
+        self.verticalLayout.addWidget(self.radio_uniform)
+        self.radio_gaus = QtWidgets.QRadioButton(self.frame_5)
+        self.radio_gaus.setObjectName("radio_gaus")
+        self.buttonGroup_noise.addButton(self.radio_gaus)
+        self.verticalLayout.addWidget(self.radio_gaus)
+        self.radio_sp = QtWidgets.QRadioButton(self.frame_5)
+        self.radio_sp.setObjectName("radio_sp")
+        self.buttonGroup_noise.addButton(self.radio_sp)
+        self.verticalLayout.addWidget(self.radio_sp)
+        self.gridLayout_13.addLayout(self.verticalLayout, 0, 0, 1, 1)
+        self.radio_none_noise = QtWidgets.QRadioButton(self.frame_5)
+        self.radio_none_noise.setChecked(True)
+        self.radio_none_noise.setObjectName("radio_none_noise")
+        self.buttonGroup_noise.addButton(self.radio_none_noise)
+        self.gridLayout_13.addWidget(self.radio_none_noise, 0, 1, 1, 1)
+        self.stackedWidget = QtWidgets.QStackedWidget(self.frame_5)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -179,64 +480,275 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addWidget(self.slider_pepper)
         self.gridLayout_4.addLayout(self.verticalLayout_5, 1, 0, 1, 1)
         self.stackedWidget.addWidget(self.page_sp)
-        self.gridLayout.addWidget(self.stackedWidget, 1, 0, 1, 1)
-        self.verticalLayout = QtWidgets.QVBoxLayout()
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.radio_uniform = QtWidgets.QRadioButton(self.noise)
-        self.radio_uniform.setChecked(True)
-        self.radio_uniform.setObjectName("radio_uniform")
-        self.buttonGroup = QtWidgets.QButtonGroup(MainWindow)
-        self.buttonGroup.setObjectName("buttonGroup")
-        self.buttonGroup.addButton(self.radio_uniform)
-        self.verticalLayout.addWidget(self.radio_uniform)
-        self.radio_gaus = QtWidgets.QRadioButton(self.noise)
-        self.radio_gaus.setObjectName("radio_gaus")
-        self.buttonGroup.addButton(self.radio_gaus)
-        self.verticalLayout.addWidget(self.radio_gaus)
-        self.radio_sp = QtWidgets.QRadioButton(self.noise)
-        self.radio_sp.setObjectName("radio_sp")
-        self.buttonGroup.addButton(self.radio_sp)
-        self.verticalLayout.addWidget(self.radio_sp)
-        self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem, 2, 0, 1, 1)
+        self.gridLayout_13.addWidget(self.stackedWidget, 1, 0, 1, 2)
+        self.gridLayout.addWidget(self.frame_5, 0, 0, 2, 2)
+        self.verticalLayout_18.addWidget(self.groupBox)
+        self.groupBox_2 = QtWidgets.QGroupBox(self.noise)
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.gridLayout_14 = QtWidgets.QGridLayout(self.groupBox_2)
+        self.gridLayout_14.setContentsMargins(-1, 25, -1, -1)
+        self.gridLayout_14.setObjectName("gridLayout_14")
+        self.frame_6 = QtWidgets.QFrame(self.groupBox_2)
+        self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_6.setObjectName("frame_6")
+        self.gridLayout_16 = QtWidgets.QGridLayout(self.frame_6)
+        self.gridLayout_16.setObjectName("gridLayout_16")
+        self.verticalLayout_13 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
+        self.radio_average = QtWidgets.QRadioButton(self.frame_6)
+        self.radio_average.setObjectName("radio_average")
+        self.buttonGroup_smoothing = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup_smoothing.setObjectName("buttonGroup_smoothing")
+        self.buttonGroup_smoothing.addButton(self.radio_average)
+        self.verticalLayout_13.addWidget(self.radio_average)
+        self.radio_median = QtWidgets.QRadioButton(self.frame_6)
+        self.radio_median.setChecked(False)
+        self.radio_median.setObjectName("radio_median")
+        self.buttonGroup_smoothing.addButton(self.radio_median)
+        self.verticalLayout_13.addWidget(self.radio_median)
+        self.radio_gauss_smooth = QtWidgets.QRadioButton(self.frame_6)
+        self.radio_gauss_smooth.setObjectName("radio_gauss_smooth")
+        self.buttonGroup_smoothing.addButton(self.radio_gauss_smooth)
+        self.verticalLayout_13.addWidget(self.radio_gauss_smooth)
+        self.gridLayout_16.addLayout(self.verticalLayout_13, 1, 0, 1, 1)
+        self.horizontalLayout_17 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.wgt_smooth_kernel = QtWidgets.QWidget(self.frame_6)
+        self.wgt_smooth_kernel.setObjectName("wgt_smooth_kernel")
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.wgt_smooth_kernel)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.label_2 = QtWidgets.QLabel(self.wgt_smooth_kernel)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_14.addWidget(self.label_2)
+        self.horizontalSlider = QtWidgets.QSlider(self.wgt_smooth_kernel)
+        self.horizontalSlider.setMinimum(3)
+        self.horizontalSlider.setMaximum(7)
+        self.horizontalSlider.setSingleStep(2)
+        self.horizontalSlider.setPageStep(2)
+        self.horizontalSlider.setSliderPosition(3)
+        self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider.setTickPosition(QtWidgets.QSlider.TicksAbove)
+        self.horizontalSlider.setTickInterval(2)
+        self.horizontalSlider.setObjectName("horizontalSlider")
+        self.verticalLayout_14.addWidget(self.horizontalSlider)
+        self.horizontalLayout_17.addWidget(self.wgt_smooth_kernel)
+        self.wgt_ktype = QtWidgets.QWidget(self.frame_6)
+        self.wgt_ktype.setObjectName("wgt_ktype")
+        self.gridLayout_15 = QtWidgets.QGridLayout(self.wgt_ktype)
+        self.gridLayout_15.setObjectName("gridLayout_15")
+        self.label = QtWidgets.QLabel(self.wgt_ktype)
+        self.label.setObjectName("label")
+        self.gridLayout_15.addWidget(self.label, 0, 0, 1, 1)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.radioButton_3 = QtWidgets.QRadioButton(self.wgt_ktype)
+        self.radioButton_3.setChecked(True)
+        self.radioButton_3.setObjectName("radioButton_3")
+        self.horizontalLayout_16.addWidget(self.radioButton_3)
+        self.radioButton_4 = QtWidgets.QRadioButton(self.wgt_ktype)
+        self.radioButton_4.setChecked(False)
+        self.radioButton_4.setObjectName("radioButton_4")
+        self.horizontalLayout_16.addWidget(self.radioButton_4)
+        self.gridLayout_15.addLayout(self.horizontalLayout_16, 1, 0, 1, 1)
+        self.horizontalLayout_17.addWidget(self.wgt_ktype)
+        self.gridLayout_16.addLayout(self.horizontalLayout_17, 2, 0, 1, 2)
+        self.verticalLayout_15 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.radio_gauss_smooth_2 = QtWidgets.QRadioButton(self.frame_6)
+        self.radio_gauss_smooth_2.setObjectName("radio_gauss_smooth_2")
+        self.buttonGroup_smoothing.addButton(self.radio_gauss_smooth_2)
+        self.verticalLayout_15.addWidget(self.radio_gauss_smooth_2)
+        self.radio_none_smooth = QtWidgets.QRadioButton(self.frame_6)
+        self.radio_none_smooth.setChecked(True)
+        self.radio_none_smooth.setObjectName("radio_none_smooth")
+        self.buttonGroup_smoothing.addButton(self.radio_none_smooth)
+        self.verticalLayout_15.addWidget(self.radio_none_smooth)
+        self.gridLayout_16.addLayout(self.verticalLayout_15, 1, 1, 1, 1)
+        self.gridLayout_14.addWidget(self.frame_6, 0, 0, 1, 1)
+        self.verticalLayout_18.addWidget(self.groupBox_2)
         self.toolBox.addItem(self.noise, "")
         self.edges = QtWidgets.QWidget()
-        self.edges.setGeometry(QtCore.QRect(0, 0, 316, 505))
+        self.edges.setGeometry(QtCore.QRect(0, 0, 374, 554))
         self.edges.setObjectName("edges")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.edges)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.frame = QtWidgets.QFrame(self.edges)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.frame)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.frame_2 = QtWidgets.QFrame(self.frame)
+        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_2.setObjectName("frame_2")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.frame_2)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.radio_sobel = QtWidgets.QRadioButton(self.frame_2)
+        self.radio_sobel.setObjectName("radio_sobel")
+        self.verticalLayout_10.addWidget(self.radio_sobel)
+        self.radio_roberts = QtWidgets.QRadioButton(self.frame_2)
+        self.radio_roberts.setObjectName("radio_roberts")
+        self.verticalLayout_10.addWidget(self.radio_roberts)
+        self.radio_prewitt = QtWidgets.QRadioButton(self.frame_2)
+        self.radio_prewitt.setObjectName("radio_prewitt")
+        self.verticalLayout_10.addWidget(self.radio_prewitt)
+        self.radio_canny = QtWidgets.QRadioButton(self.frame_2)
+        self.radio_canny.setObjectName("radio_canny")
+        self.verticalLayout_10.addWidget(self.radio_canny)
+        self.radio_none_edges = QtWidgets.QRadioButton(self.frame_2)
+        self.radio_none_edges.setChecked(True)
+        self.radio_none_edges.setObjectName("radio_none_edges")
+        self.verticalLayout_10.addWidget(self.radio_none_edges)
+        self.verticalLayout_11.addWidget(self.frame_2)
+        self.stackedWidget_edges = QtWidgets.QStackedWidget(self.frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.stackedWidget_edges.sizePolicy().hasHeightForWidth())
+        self.stackedWidget_edges.setSizePolicy(sizePolicy)
+        self.stackedWidget_edges.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.stackedWidget_edges.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.stackedWidget_edges.setObjectName("stackedWidget_edges")
+        self.page_edges_size = QtWidgets.QWidget()
+        self.page_edges_size.setObjectName("page_edges_size")
+        self.gridLayout_11 = QtWidgets.QGridLayout(self.page_edges_size)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.frame_3 = QtWidgets.QFrame(self.page_edges_size)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.frame_3)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.label_edges_size = QtWidgets.QLabel(self.frame_3)
+        self.label_edges_size.setObjectName("label_edges_size")
+        self.verticalLayout_12.addWidget(self.label_edges_size)
+        self.slider_kernel_size = QtWidgets.QSlider(self.frame_3)
+        self.slider_kernel_size.setOrientation(QtCore.Qt.Horizontal)
+        self.slider_kernel_size.setObjectName("slider_kernel_size")
+        self.verticalLayout_12.addWidget(self.slider_kernel_size)
+        self.gridLayout_11.addWidget(self.frame_3, 0, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 226, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_11.addItem(spacerItem, 1, 0, 1, 1)
+        self.stackedWidget_edges.addWidget(self.page_edges_size)
+        self.page_edges_empty = QtWidgets.QWidget()
+        self.page_edges_empty.setObjectName("page_edges_empty")
+        self.gridLayout_12 = QtWidgets.QGridLayout(self.page_edges_empty)
+        self.gridLayout_12.setObjectName("gridLayout_12")
+        self.widget_2 = QtWidgets.QWidget(self.page_edges_empty)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
+        self.widget_2.setSizePolicy(sizePolicy)
+        self.widget_2.setObjectName("widget_2")
+        self.gridLayout_12.addWidget(self.widget_2, 0, 0, 1, 1)
+        self.stackedWidget_edges.addWidget(self.page_edges_empty)
+        self.page_edges_canny = QtWidgets.QWidget()
+        self.page_edges_canny.setObjectName("page_edges_canny")
+        self.formLayout = QtWidgets.QFormLayout(self.page_edges_canny)
+        self.formLayout.setObjectName("formLayout")
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        self.label_10 = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_10.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.label_10.setObjectName("label_10")
+        self.horizontalLayout_15.addWidget(self.label_10)
+        self.label_sigma = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_sigma.setObjectName("label_sigma")
+        self.horizontalLayout_15.addWidget(self.label_sigma)
+        self.formLayout.setLayout(0, QtWidgets.QFormLayout.SpanningRole, self.horizontalLayout_15)
+        self.label_11 = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_11.setObjectName("label_11")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_11)
+        self.label_thresholdL = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_thresholdL.setObjectName("label_thresholdL")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.label_thresholdL)
+        self.label_12 = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_12.setObjectName("label_12")
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.label_12)
+        self.label_thresholdH = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_thresholdH.setObjectName("label_thresholdH")
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.label_thresholdH)
+        self.label_17 = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_17.setObjectName("label_17")
+        self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.label_17)
+        self.label_edges_ksize = QtWidgets.QLabel(self.page_edges_canny)
+        self.label_edges_ksize.setObjectName("label_edges_ksize")
+        self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.label_edges_ksize)
+        self.horizontalSlider_3 = QtWidgets.QSlider(self.page_edges_canny)
+        self.horizontalSlider_3.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_3.setObjectName("horizontalSlider_3")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.SpanningRole, self.horizontalSlider_3)
+        self.horizontalSlider_4 = QtWidgets.QSlider(self.page_edges_canny)
+        self.horizontalSlider_4.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_4.setObjectName("horizontalSlider_4")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.SpanningRole, self.horizontalSlider_4)
+        self.horizontalSlider_5 = QtWidgets.QSlider(self.page_edges_canny)
+        self.horizontalSlider_5.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_5.setObjectName("horizontalSlider_5")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.SpanningRole, self.horizontalSlider_5)
+        self.horizontalSlider_9 = QtWidgets.QSlider(self.page_edges_canny)
+        self.horizontalSlider_9.setMinimum(3)
+        self.horizontalSlider_9.setMaximum(7)
+        self.horizontalSlider_9.setSingleStep(2)
+        self.horizontalSlider_9.setPageStep(2)
+        self.horizontalSlider_9.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_9.setTickPosition(QtWidgets.QSlider.TicksAbove)
+        self.horizontalSlider_9.setTickInterval(2)
+        self.horizontalSlider_9.setObjectName("horizontalSlider_9")
+        self.formLayout.setWidget(7, QtWidgets.QFormLayout.SpanningRole, self.horizontalSlider_9)
+        self.stackedWidget_edges.addWidget(self.page_edges_canny)
+        self.verticalLayout_11.addWidget(self.stackedWidget_edges)
+        self.verticalLayout_9.addWidget(self.frame)
         self.toolBox.addItem(self.edges, "")
         self.thresholding = QtWidgets.QWidget()
+        self.thresholding.setGeometry(QtCore.QRect(0, 0, 374, 554))
         self.thresholding.setObjectName("thresholding")
+        self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.thresholding)
+        self.verticalLayout_21.setObjectName("verticalLayout_21")
+        self.verticalLayout_19 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_19.setObjectName("verticalLayout_19")
+        self.radio_local = QtWidgets.QRadioButton(self.thresholding)
+        self.radio_local.setObjectName("radio_local")
+        self.buttonGroup_edges = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup_edges.setObjectName("buttonGroup_edges")
+        self.buttonGroup_edges.addButton(self.radio_local)
+        self.verticalLayout_19.addWidget(self.radio_local)
+        self.radio_global = QtWidgets.QRadioButton(self.thresholding)
+        self.radio_global.setObjectName("radio_global")
+        self.buttonGroup_edges.addButton(self.radio_global)
+        self.verticalLayout_19.addWidget(self.radio_global)
+        self.verticalLayout_21.addLayout(self.verticalLayout_19)
+        self.verticalLayout_20 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_20.setObjectName("verticalLayout_20")
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.label_3 = QtWidgets.QLabel(self.thresholding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy)
+        self.label_3.setObjectName("label_3")
+        self.horizontalLayout_10.addWidget(self.label_3)
+        self.label_thesholding = QtWidgets.QLabel(self.thresholding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_thesholding.sizePolicy().hasHeightForWidth())
+        self.label_thesholding.setSizePolicy(sizePolicy)
+        self.label_thesholding.setObjectName("label_thesholding")
+        self.horizontalLayout_10.addWidget(self.label_thesholding)
+        self.verticalLayout_20.addLayout(self.horizontalLayout_10)
+        self.slider_thresholding = QtWidgets.QSlider(self.thresholding)
+        self.slider_thresholding.setOrientation(QtCore.Qt.Horizontal)
+        self.slider_thresholding.setObjectName("slider_thresholding")
+        self.verticalLayout_20.addWidget(self.slider_thresholding)
+        self.verticalLayout_21.addLayout(self.verticalLayout_20)
         self.toolBox.addItem(self.thresholding, "")
         self.gridLayout_6.addWidget(self.toolBox, 0, 0, 2, 1)
-        self.wgt_input_img = PlotWidget(self.tab_filter)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.wgt_input_img.sizePolicy().hasHeightForWidth())
-        self.wgt_input_img.setSizePolicy(sizePolicy)
-        self.wgt_input_img.setStyleSheet("background:green")
-        self.wgt_input_img.setObjectName("wgt_input_img")
-        self.gridLayout_6.addWidget(self.wgt_input_img, 0, 1, 1, 1)
-        self.wgt_output_img = PlotWidget(self.tab_filter)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.wgt_output_img.sizePolicy().hasHeightForWidth())
-        self.wgt_output_img.setSizePolicy(sizePolicy)
-        self.wgt_output_img.setStyleSheet("background:green")
-        self.wgt_output_img.setObjectName("wgt_output_img")
-        self.gridLayout_6.addWidget(self.wgt_output_img, 0, 2, 2, 1)
-        self.wgt_input_img_greyscale = PlotWidget(self.tab_filter)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.wgt_input_img_greyscale.sizePolicy().hasHeightForWidth())
-        self.wgt_input_img_greyscale.setSizePolicy(sizePolicy)
-        self.wgt_input_img_greyscale.setStyleSheet("background:green")
-        self.wgt_input_img_greyscale.setObjectName("wgt_input_img_greyscale")
-        self.gridLayout_6.addWidget(self.wgt_input_img_greyscale, 1, 1, 1, 1)
         self.tabWidget.addTab(self.tab_filter, "")
         self.tab_histo = QtWidgets.QWidget()
         self.tab_histo.setObjectName("tab_histo")
@@ -245,14 +757,14 @@ class Ui_MainWindow(object):
         self.splitter = QtWidgets.QSplitter(self.tab_histo)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
-        self.widget = QtWidgets.QWidget(self.splitter)
-        self.widget.setObjectName("widget")
-        self.gridLayout_7 = QtWidgets.QGridLayout(self.widget)
+        self.layoutWidget = QtWidgets.QWidget(self.splitter)
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.gridLayout_7 = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.wgt_histo_red = PlotWidget(self.widget)
+        self.wgt_histo_red = PlotWidget(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -261,7 +773,7 @@ class Ui_MainWindow(object):
         self.wgt_histo_red.setStyleSheet("background:lightblue")
         self.wgt_histo_red.setObjectName("wgt_histo_red")
         self.horizontalLayout.addWidget(self.wgt_histo_red)
-        self.wgt_histo_red_dist = PlotWidget(self.widget)
+        self.wgt_histo_red_dist = PlotWidget(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -273,7 +785,7 @@ class Ui_MainWindow(object):
         self.gridLayout_7.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.wgt_histo_green = PlotWidget(self.widget)
+        self.wgt_histo_green = PlotWidget(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -282,7 +794,7 @@ class Ui_MainWindow(object):
         self.wgt_histo_green.setStyleSheet("background:lightblue")
         self.wgt_histo_green.setObjectName("wgt_histo_green")
         self.horizontalLayout_2.addWidget(self.wgt_histo_green)
-        self.wgt_histo_green_dist = PlotWidget(self.widget)
+        self.wgt_histo_green_dist = PlotWidget(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -294,7 +806,7 @@ class Ui_MainWindow(object):
         self.gridLayout_7.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.wgt_histo_blue = PlotWidget(self.widget)
+        self.wgt_histo_blue = PlotWidget(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -303,7 +815,7 @@ class Ui_MainWindow(object):
         self.wgt_histo_blue.setStyleSheet("background:lightblue")
         self.wgt_histo_blue.setObjectName("wgt_histo_blue")
         self.horizontalLayout_3.addWidget(self.wgt_histo_blue)
-        self.wgt_histo_blue_dist = PlotWidget(self.widget)
+        self.wgt_histo_blue_dist = PlotWidget(self.layoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -313,14 +825,14 @@ class Ui_MainWindow(object):
         self.wgt_histo_blue_dist.setObjectName("wgt_histo_blue_dist")
         self.horizontalLayout_3.addWidget(self.wgt_histo_blue_dist)
         self.gridLayout_7.addLayout(self.horizontalLayout_3, 2, 0, 1, 1)
-        self.widget1 = QtWidgets.QWidget(self.splitter)
-        self.widget1.setObjectName("widget1")
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.widget1)
+        self.layoutWidget1 = QtWidgets.QWidget(self.splitter)
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.wgt_histo_img_colored = PlotWidget(self.widget1)
+        self.wgt_histo_img_colored = PlotWidget(self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -329,7 +841,7 @@ class Ui_MainWindow(object):
         self.wgt_histo_img_colored.setStyleSheet("background:green")
         self.wgt_histo_img_colored.setObjectName("wgt_histo_img_colored")
         self.verticalLayout_7.addWidget(self.wgt_histo_img_colored)
-        self.wgt_histo_colored = PlotWidget(self.widget1)
+        self.wgt_histo_colored = PlotWidget(self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -341,7 +853,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addLayout(self.verticalLayout_7)
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        self.wgt_histo_img_greyscale = PlotWidget(self.widget1)
+        self.wgt_histo_img_greyscale = PlotWidget(self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -350,7 +862,7 @@ class Ui_MainWindow(object):
         self.wgt_histo_img_greyscale.setStyleSheet("background:green")
         self.wgt_histo_img_greyscale.setObjectName("wgt_histo_img_greyscale")
         self.verticalLayout_8.addWidget(self.wgt_histo_img_greyscale)
-        self.wgt_histo_greyscale = PlotWidget(self.widget1)
+        self.wgt_histo_greyscale = PlotWidget(self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -364,11 +876,139 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_histo, "")
         self.tab_hybrid = QtWidgets.QWidget()
         self.tab_hybrid.setObjectName("tab_hybrid")
+        self.gridLayout_10 = QtWidgets.QGridLayout(self.tab_hybrid)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.verticalLayout_22 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_22.setObjectName("verticalLayout_22")
+        self.wgt_hybrid_img_1 = PlotWidget(self.tab_hybrid)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_hybrid_img_1.sizePolicy().hasHeightForWidth())
+        self.wgt_hybrid_img_1.setSizePolicy(sizePolicy)
+        self.wgt_hybrid_img_1.setStyleSheet("background:green")
+        self.wgt_hybrid_img_1.setObjectName("wgt_hybrid_img_1")
+        self.verticalLayout_22.addWidget(self.wgt_hybrid_img_1)
+        self.wgt_hybrid_img_FT_1 = PlotWidget(self.tab_hybrid)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_hybrid_img_FT_1.sizePolicy().hasHeightForWidth())
+        self.wgt_hybrid_img_FT_1.setSizePolicy(sizePolicy)
+        self.wgt_hybrid_img_FT_1.setStyleSheet("background:green")
+        self.wgt_hybrid_img_FT_1.setObjectName("wgt_hybrid_img_FT_1")
+        self.verticalLayout_22.addWidget(self.wgt_hybrid_img_FT_1)
+        self.gridLayout_10.addLayout(self.verticalLayout_22, 0, 0, 2, 1)
+        self.verticalLayout_23 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_23.setObjectName("verticalLayout_23")
+        self.wgt_hybrid_img_2 = PlotWidget(self.tab_hybrid)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_hybrid_img_2.sizePolicy().hasHeightForWidth())
+        self.wgt_hybrid_img_2.setSizePolicy(sizePolicy)
+        self.wgt_hybrid_img_2.setStyleSheet("background:green")
+        self.wgt_hybrid_img_2.setObjectName("wgt_hybrid_img_2")
+        self.verticalLayout_23.addWidget(self.wgt_hybrid_img_2)
+        self.wgt_hybrid_img_FT_2 = PlotWidget(self.tab_hybrid)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_hybrid_img_FT_2.sizePolicy().hasHeightForWidth())
+        self.wgt_hybrid_img_FT_2.setSizePolicy(sizePolicy)
+        self.wgt_hybrid_img_FT_2.setStyleSheet("background:green")
+        self.wgt_hybrid_img_FT_2.setObjectName("wgt_hybrid_img_FT_2")
+        self.verticalLayout_23.addWidget(self.wgt_hybrid_img_FT_2)
+        self.gridLayout_10.addLayout(self.verticalLayout_23, 0, 1, 2, 1)
+        self.widget = QtWidgets.QWidget(self.tab_hybrid)
+        self.widget.setObjectName("widget")
+        self.gridLayout_9 = QtWidgets.QGridLayout(self.widget)
+        self.gridLayout_9.setContentsMargins(5, 5, 5, 5)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.verticalLayout_26 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_26.setObjectName("verticalLayout_26")
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.label_8 = QtWidgets.QLabel(self.widget)
+        self.label_8.setObjectName("label_8")
+        self.horizontalLayout_13.addWidget(self.label_8)
+        self.btn_browse_1 = QtWidgets.QPushButton(self.widget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_browse_1.sizePolicy().hasHeightForWidth())
+        self.btn_browse_1.setSizePolicy(sizePolicy)
+        self.btn_browse_1.setObjectName("btn_browse_1")
+        self.horizontalLayout_13.addWidget(self.btn_browse_1)
+        self.verticalLayout_26.addLayout(self.horizontalLayout_13)
+        self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_14.setObjectName("horizontalLayout_14")
+        self.label_9 = QtWidgets.QLabel(self.widget)
+        self.label_9.setObjectName("label_9")
+        self.horizontalLayout_14.addWidget(self.label_9)
+        self.btn_browse_2 = QtWidgets.QPushButton(self.widget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_browse_2.sizePolicy().hasHeightForWidth())
+        self.btn_browse_2.setSizePolicy(sizePolicy)
+        self.btn_browse_2.setObjectName("btn_browse_2")
+        self.horizontalLayout_14.addWidget(self.btn_browse_2)
+        self.verticalLayout_26.addLayout(self.horizontalLayout_14)
+        self.gridLayout_9.addLayout(self.verticalLayout_26, 0, 0, 1, 1)
+        self.verticalLayout_25 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_25.setObjectName("verticalLayout_25")
+        self.label_5 = QtWidgets.QLabel(self.widget)
+        self.label_5.setObjectName("label_5")
+        self.verticalLayout_25.addWidget(self.label_5, 0, QtCore.Qt.AlignHCenter)
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.radioButton = QtWidgets.QRadioButton(self.widget)
+        self.radioButton.setChecked(False)
+        self.radioButton.setObjectName("radioButton")
+        self.horizontalLayout_12.addWidget(self.radioButton, 0, QtCore.Qt.AlignHCenter)
+        self.radioButton_2 = QtWidgets.QRadioButton(self.widget)
+        self.radioButton_2.setChecked(True)
+        self.radioButton_2.setObjectName("radioButton_2")
+        self.horizontalLayout_12.addWidget(self.radioButton_2, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout_25.addLayout(self.horizontalLayout_12)
+        self.gridLayout_9.addLayout(self.verticalLayout_25, 1, 0, 1, 1)
+        self.verticalLayout_24 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_24.setObjectName("verticalLayout_24")
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.label_6 = QtWidgets.QLabel(self.widget)
+        self.label_6.setObjectName("label_6")
+        self.horizontalLayout_11.addWidget(self.label_6)
+        self.label_7 = QtWidgets.QLabel(self.widget)
+        self.label_7.setScaledContents(False)
+        self.label_7.setObjectName("label_7")
+        self.horizontalLayout_11.addWidget(self.label_7)
+        self.verticalLayout_24.addLayout(self.horizontalLayout_11)
+        self.horizontalSlider_2 = QtWidgets.QSlider(self.widget)
+        self.horizontalSlider_2.setMaximum(100)
+        self.horizontalSlider_2.setProperty("value", 50)
+        self.horizontalSlider_2.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_2.setTickPosition(QtWidgets.QSlider.TicksAbove)
+        self.horizontalSlider_2.setTickInterval(10)
+        self.horizontalSlider_2.setObjectName("horizontalSlider_2")
+        self.verticalLayout_24.addWidget(self.horizontalSlider_2)
+        self.gridLayout_9.addLayout(self.verticalLayout_24, 2, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.widget, 0, 2, 1, 1)
+        self.wgt_hybrid_img_output = PlotWidget(self.tab_hybrid)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.wgt_hybrid_img_output.sizePolicy().hasHeightForWidth())
+        self.wgt_hybrid_img_output.setSizePolicy(sizePolicy)
+        self.wgt_hybrid_img_output.setStyleSheet("background:green")
+        self.wgt_hybrid_img_output.setObjectName("wgt_hybrid_img_output")
+        self.gridLayout_10.addWidget(self.wgt_hybrid_img_output, 1, 2, 1, 1)
         self.tabWidget.addTab(self.tab_hybrid, "")
         self.gridLayout_5.addWidget(self.tabWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 989, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1159, 30))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -390,17 +1030,30 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         self.toolBox.setCurrentIndex(0)
+        self.toolBox.layout().setSpacing(7)
         self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget_edges.setCurrentIndex(0)
         self.slider_intensity.valueChanged['int'].connect(self.label_intensity_value.setNum) # type: ignore
         self.slider_mean.valueChanged['int'].connect(self.label_mean_value.setNum) # type: ignore
+        self.slider_thresholding.valueChanged['int'].connect(self.label_thesholding.setNum) # type: ignore
+        self.slider_pepper.valueChanged['int'].connect(self.label_pepper_value.setNum) # type: ignore
         self.slider_std.valueChanged['int'].connect(self.label_std_value.setNum) # type: ignore
         self.slider_salt.valueChanged['int'].connect(self.label_salt_value.setNum) # type: ignore
-        self.slider_pepper.valueChanged['int'].connect(self.label_pepper_value.setNum) # type: ignore
+        self.horizontalSlider_2.valueChanged['int'].connect(self.label_7.setNum) # type: ignore
+        self.horizontalSlider_3.valueChanged['int'].connect(self.label_sigma.setNum) # type: ignore
+        self.horizontalSlider_4.valueChanged['int'].connect(self.label_thresholdL.setNum) # type: ignore
+        self.horizontalSlider_5.valueChanged['int'].connect(self.label_thresholdH.setNum) # type: ignore
+        self.horizontalSlider_9.valueChanged['int'].connect(self.label_edges_ksize.setNum) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.groupBox.setTitle(_translate("MainWindow", "Noise"))
+        self.radio_uniform.setText(_translate("MainWindow", "Uniform"))
+        self.radio_gaus.setText(_translate("MainWindow", "Gaussian"))
+        self.radio_sp.setText(_translate("MainWindow", "Salt and Pepper"))
+        self.radio_none_noise.setText(_translate("MainWindow", "None"))
         self.label_intensity.setText(_translate("MainWindow", "Intensity:"))
         self.label_intensity_value.setText(_translate("MainWindow", "0"))
         self.label_mean.setText(_translate("MainWindow", "Mean:"))
@@ -411,14 +1064,48 @@ class Ui_MainWindow(object):
         self.label_salt_value.setText(_translate("MainWindow", "0"))
         self.label_pepper.setText(_translate("MainWindow", "Pepper Probability:"))
         self.label_pepper_value.setText(_translate("MainWindow", "0"))
-        self.radio_uniform.setText(_translate("MainWindow", "Uniform"))
-        self.radio_gaus.setText(_translate("MainWindow", "Gaussian"))
-        self.radio_sp.setText(_translate("MainWindow", "Salt and Pepper"))
+        self.groupBox_2.setTitle(_translate("MainWindow", "Smoothing"))
+        self.radio_average.setText(_translate("MainWindow", "Average"))
+        self.radio_median.setText(_translate("MainWindow", "Median"))
+        self.radio_gauss_smooth.setText(_translate("MainWindow", "Gaussian"))
+        self.label_2.setText(_translate("MainWindow", "Kernel Size:"))
+        self.label.setText(_translate("MainWindow", "Kernel:"))
+        self.radioButton_3.setText(_translate("MainWindow", "1"))
+        self.radioButton_4.setText(_translate("MainWindow", "2"))
+        self.radio_gauss_smooth_2.setText(_translate("MainWindow", "Laplacian"))
+        self.radio_none_smooth.setText(_translate("MainWindow", "None"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.noise), _translate("MainWindow", "Noise/Smoothing"))
+        self.radio_sobel.setText(_translate("MainWindow", "Sobel"))
+        self.radio_roberts.setText(_translate("MainWindow", "Roberts"))
+        self.radio_prewitt.setText(_translate("MainWindow", "Prewitt"))
+        self.radio_canny.setText(_translate("MainWindow", "Canny"))
+        self.radio_none_edges.setText(_translate("MainWindow", "None"))
+        self.label_edges_size.setText(_translate("MainWindow", "Size"))
+        self.label_10.setText(_translate("MainWindow", "Sigma:"))
+        self.label_sigma.setText(_translate("MainWindow", "1"))
+        self.label_11.setText(_translate("MainWindow", "Low Threshold:"))
+        self.label_thresholdL.setText(_translate("MainWindow", "0"))
+        self.label_12.setText(_translate("MainWindow", "High threshold:"))
+        self.label_thresholdH.setText(_translate("MainWindow", "1"))
+        self.label_17.setText(_translate("MainWindow", "Kernel Size:"))
+        self.label_edges_ksize.setText(_translate("MainWindow", "3"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.edges), _translate("MainWindow", "Edges"))
+        self.radio_local.setText(_translate("MainWindow", "Local"))
+        self.radio_global.setText(_translate("MainWindow", "Global"))
+        self.label_3.setText(_translate("MainWindow", "Threshold:"))
+        self.label_thesholding.setText(_translate("MainWindow", "0"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.thresholding), _translate("MainWindow", "Thresholding"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_filter), _translate("MainWindow", "Filters/Noise"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_histo), _translate("MainWindow", "Histograms"))
+        self.label_8.setText(_translate("MainWindow", "Image 1:"))
+        self.btn_browse_1.setText(_translate("MainWindow", "Browse"))
+        self.label_9.setText(_translate("MainWindow", "Image 2:"))
+        self.btn_browse_2.setText(_translate("MainWindow", "Browse"))
+        self.label_5.setText(_translate("MainWindow", "Edge Donor:"))
+        self.radioButton.setText(_translate("MainWindow", "Image 1"))
+        self.radioButton_2.setText(_translate("MainWindow", "Image 2"))
+        self.label_6.setText(_translate("MainWindow", "Mix Threshold:"))
+        self.label_7.setText(_translate("MainWindow", "50"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_hybrid), _translate("MainWindow", "Hybrid Image"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionOpen_Image.setText(_translate("MainWindow", "Open Image"))

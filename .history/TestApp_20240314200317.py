@@ -11,7 +11,7 @@ from PyQt5.uic import loadUiType
 ui, _ = loadUiType('testui.ui')
 
 
-class ImageEditor(QMainWindow, ui):
+class ImageEditor(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(ImageEditor, self).__init__()
         self.setupUi(self)
@@ -33,14 +33,10 @@ class ImageEditor(QMainWindow, ui):
          self.item_hybrid_FT_1, self.item_hybrid_FT_2] = [pg.ImageItem() for i in range(18)]
 
         self.loaded_image = None
-        self.loaded_image_second = None
-        
-        
         self.setup_plotwidgets()
 
-
         # Maps the radio button to the correspoiding slider page's index
-        self.radio_dict_noise = {
+        self.slider_map_noise = {
 
             self.radio_uniform: 0,
             self.radio_gaus: 1,
@@ -48,7 +44,7 @@ class ImageEditor(QMainWindow, ui):
             self.radio_none_noise: 0
         }
         
-        self.radio_dict_edges = {
+        self.slider_map_edges = {
             self.radio_sobel: 0,
             self.radio_prewitt: 1,
             self.radio_roberts: 1,
@@ -56,13 +52,8 @@ class ImageEditor(QMainWindow, ui):
             self.radio_none_edges: 0
             
         }
-
-
-
-
-        self.set_radio_button_connections() # Sets up handling Ui changes according to radio button selection
         
-        self.hide_stuff_at_startup()
+        self.set_radio_button_connections()
 
 
         # Connect Openfile Action to its function
@@ -129,38 +120,15 @@ class ImageEditor(QMainWindow, ui):
             else:
                 stacked_widget.setVisible(True)
                 stacked_widget.setCurrentIndex(radio_dict[pressed_radio])
-                
-    def show_smoothing_options(self):
-        if self.sender().isChecked():
-            # Show the Kernel type option for Gaussian And Laplacian smoothing only
-            if self.sender().text() == "Gaussian" or self.sender().text() == "Laplacian" : 
-                self.wgt_ktype.setVisible(True)
-                
-            elif self.sender().text() == "None":
-                self.wgt_ktype.setVisible(False)
-                self.wgt_smooth_kernel.setVisible(False)
-                
-            else:
-                self.wgt_ktype.setVisible(False)
-                self.wgt_smooth_kernel.setVisible(True)
 
     def set_radio_button_connections(self):        
-        
         # Connect noise radio buttons to function that sets visible sliders according to selection
-        for noise_radio in self.radio_dict_noise.keys():
-            noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget, self.radio_dict_noise))
+        # for noise_radio in [self.radio_uniform, self.radio_gaus, self.radio_sp, self.radio_none_noise]:
+        for noise_radio in self.slider_map_noise.keys().append:
+            noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget, self.slider_map_noise))
             
-        # Connect edges radio buttons to function that sets visible sliders according to selection
-        for edge_radio in self.radio_dict_edges.keys():
-            edge_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget_edges, self.radio_dict_edges))
-            
-        for smooth_radio in self.buttonGroup_smoothing.buttons():
-            smooth_radio.toggled.connect(self.show_smoothing_options)
-            
-            
-    def hide_stuff_at_startup(self):
-        for widget in [self.stackedWidget, self.stackedWidget_edges, self.wgt_smooth_kernel, self.wgt_ktype]:
-            widget.setVisible(False)
+        for noise_radio in self.slider_map_edges.keys():
+            noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget_edges, self.slider_map_edges))
 
         
 

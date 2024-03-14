@@ -11,7 +11,7 @@ from PyQt5.uic import loadUiType
 ui, _ = loadUiType('testui.ui')
 
 
-class ImageEditor(QMainWindow, ui):
+class ImageEditor(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(ImageEditor, self).__init__()
         self.setupUi(self)
@@ -33,9 +33,6 @@ class ImageEditor(QMainWindow, ui):
          self.item_hybrid_FT_1, self.item_hybrid_FT_2] = [pg.ImageItem() for i in range(18)]
 
         self.loaded_image = None
-        self.loaded_image_second = None
-        
-        
         self.setup_plotwidgets()
 
 
@@ -60,9 +57,7 @@ class ImageEditor(QMainWindow, ui):
 
 
 
-        self.set_radio_button_connections() # Sets up handling Ui changes according to radio button selection
-        
-        self.hide_stuff_at_startup()
+        self.set_radio_button_connections()
 
 
         # Connect Openfile Action to its function
@@ -130,19 +125,12 @@ class ImageEditor(QMainWindow, ui):
                 stacked_widget.setVisible(True)
                 stacked_widget.setCurrentIndex(radio_dict[pressed_radio])
                 
-    def show_smoothing_options(self):
+    def show_kernel_type(self,flag):
         if self.sender().isChecked():
-            # Show the Kernel type option for Gaussian And Laplacian smoothing only
             if self.sender().text() == "Gaussian" or self.sender().text() == "Laplacian" : 
                 self.wgt_ktype.setVisible(True)
-                
-            elif self.sender().text() == "None":
-                self.wgt_ktype.setVisible(False)
-                self.wgt_smooth_kernel.setVisible(False)
-                
             else:
                 self.wgt_ktype.setVisible(False)
-                self.wgt_smooth_kernel.setVisible(True)
 
     def set_radio_button_connections(self):        
         
@@ -155,12 +143,7 @@ class ImageEditor(QMainWindow, ui):
             edge_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget_edges, self.radio_dict_edges))
             
         for smooth_radio in self.buttonGroup_smoothing.buttons():
-            smooth_radio.toggled.connect(self.show_smoothing_options)
-            
-            
-    def hide_stuff_at_startup(self):
-        for widget in [self.stackedWidget, self.stackedWidget_edges, self.wgt_smooth_kernel, self.wgt_ktype]:
-            widget.setVisible(False)
+            smooth_radio.toggled.connect(self.show_kernel_type)
 
         
 

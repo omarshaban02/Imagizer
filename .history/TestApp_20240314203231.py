@@ -11,7 +11,7 @@ from PyQt5.uic import loadUiType
 ui, _ = loadUiType('testui.ui')
 
 
-class ImageEditor(QMainWindow, ui):
+class ImageEditor(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(ImageEditor, self).__init__()
         self.setupUi(self)
