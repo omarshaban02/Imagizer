@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from scipy.signal import convolve2d
+import threading
 
 
 def matrix_padding(img, size):
@@ -9,7 +10,7 @@ def matrix_padding(img, size):
 
 
 class Filter:
-    def __init__(self):
+    def __init__(self, img):
         self.img_average = None
         self.img_median = None
         self.img_gaussian = None
@@ -18,6 +19,19 @@ class Filter:
         self.img_canny = None
         self.img_sobel = None
         self.img_laplacian = None
+
+        calculations_thread = threading.Thread(target=self.calc_filters, args=(img,))
+        calculations_thread.start()
+
+    def calc_filters(self, img):
+        self.img_average = self.average(img, 3)
+        self.img_median = self.median(img, 3)
+        self.img_gaussian = self.gaussian_opencv(img, 3, 1.5)
+        self.img_roberts = self.roberts(img)
+        self.img_prewitt = self.prewitt(img)
+        self.img_canny = self.canny(img)
+        self.img_sobel = self.sobel(img)
+        self.img_laplacian = self.laplace(img)
 
     # Smoothing filters
     def average(self, img, size):
@@ -60,8 +74,12 @@ class Filter:
         return (np.abs(grad1) + np.abs(grad2)).astype(np.uint8)
 
     def prewitt(self, img):
-        kernel_x = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
-        kernel_y = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]])
+        kernel_x = np.array([[-1, 0, 1],
+                             [-1, 0, 1],
+                             [-1, 0, 1]])
+        kernel_y = np.array([[-1, -1, -1],
+                             [0, 0, 0],
+                             [1, 1, 1]])
 
         grad_x = convolve2d(img, kernel_x, mode='same', boundary='symm')
         grad_y = convolve2d(img, kernel_y, mode='same', boundary='symm')
@@ -101,8 +119,6 @@ class Filter:
 
         return laplace_result
 
-
-
     def global_threshold(image, threshold_value=127, max_value=255):
         """
         Apply global thresholding to a grayscale image.
@@ -136,7 +152,7 @@ class Filter:
             for j in range(image.shape[1]):
                 # Define the region of interest
                 roi = image[max(0, i - blockSize // 2): min(image.shape[0], i + blockSize // 2),
-                            max(0, j - blockSize // 2): min(image.shape[1], j + blockSize // 2)]
+                      max(0, j - blockSize // 2): min(image.shape[1], j + blockSize // 2)]
                 # Compute the threshold value for the region
                 threshold_value = np.mean(roi) - C
                 # Apply thresholding
@@ -194,7 +210,8 @@ def add_salt_and_pepper_noise(image, salt_prob, pepper_prob):
 
     return noisy_image
 
-def add_uniform_noise(image, intensity = 50):
+
+def add_uniform_noise(image, intensity=50):
     """Add uniform noise to an image.
 
     Args:
@@ -205,12 +222,9 @@ def add_uniform_noise(image, intensity = 50):
         noisy_image (numpy.ndarray): The image after applying noise modifier.
         
     """
-    
+
     noisy_image = np.copy(image)
     noise = np.random.uniform(-intensity, intensity, image.shape).astype('uint8')
     noisy_image = cv2.add(image, noise)
-    
-    return noisy_image
-    
-    
 
+    return noisy_image
