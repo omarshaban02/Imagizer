@@ -7,7 +7,7 @@ import cv2
 from classes import Filter
 # from res_rc import *  # Import the resource module
 from PyQt5.uic import loadUiType
-
+import numpy as np
 ui, _ = loadUiType('testui.ui')
 
 
@@ -16,6 +16,8 @@ class ImageEditor(QMainWindow, ui):
         super(ImageEditor, self).__init__()
         self.setupUi(self)
         self.filter = None
+        self.noisy_img = None
+
         
         self.plotwidget_set = (self.wgt_input_img, self.wgt_input_img_greyscale, self.wgt_output_img,
                           self.wgt_histo_red, self.wgt_histo_blue, self.wgt_histo_green,
@@ -61,6 +63,8 @@ class ImageEditor(QMainWindow, ui):
 
         #connect buttons
         self.btn_browse_1.clicked.connect(self.open_image)
+        self.radio_average.toggled.connect(self.average_img_display)
+        self.kernel_size_slider.valueChanged.connect(self.average_img_display)
 
 
         self.set_radio_button_connections() # Sets up handling Ui changes according to radio button selection
@@ -70,6 +74,15 @@ class ImageEditor(QMainWindow, ui):
 
         # Connect Openfile Action to its function
         self.actionOpen_Image.triggered.connect(self.open_image)
+
+    def average_img_display(self):
+        if np.any(self.filter.current_img != self.noisy_img) or self.filter.current_ksize != self.kernel_size_slider.value():
+            self.filter.average(self.noisy_img, self.kernel_size_slider.value())
+        self.display_image(self.item_filter_output, self.filter.img_average)
+
+
+
+
 
 
     def open_image(self):
@@ -87,6 +100,7 @@ class ImageEditor(QMainWindow, ui):
         self.loaded_image = cv2.rotate(cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB), cv2.ROTATE_90_CLOCKWISE)
         greyscale_image = cv2.cvtColor(self.loaded_image, cv2.COLOR_RGB2GRAY)
         self.filter = Filter(greyscale_image)
+        self.noisy_img = greyscale_image
         for color_plot, grey_plot in zip([self.item_filter_input, self.item_histo_img_colored], [self.item_filter_greyscale, self.item_histo_img_grey]):
             self.display_image(color_plot, self.loaded_image)
             self.display_image(grey_plot, greyscale_image)

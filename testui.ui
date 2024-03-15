@@ -358,7 +358,7 @@ QPlotWidget{
            <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="tabSpacing">
            <number>7</number>
@@ -368,8 +368,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>334</width>
-             <height>546</height>
+             <width>374</width>
+             <height>548</height>
             </rect>
            </property>
            <attribute name="label">
@@ -832,7 +832,7 @@ QPlotWidget{
                         </widget>
                        </item>
                        <item>
-                        <widget class="QSlider" name="horizontalSlider">
+                        <widget class="QSlider" name="kernel_size_slider">
                          <property name="cursor">
                           <cursorShape>OpenHandCursor</cursorShape>
                          </property>
@@ -1243,8 +1243,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>153</width>
-             <height>143</height>
+             <width>374</width>
+             <height>548</height>
             </rect>
            </property>
            <attribute name="label">
@@ -2261,7 +2261,7 @@ font-size: 18px;</string>
  </connections>
  <buttongroups>
   <buttongroup name="buttonGroup_edges"/>
-  <buttongroup name="buttonGroup_noise"/>
   <buttongroup name="buttonGroup_smoothing"/>
+  <buttongroup name="buttonGroup_noise"/>
  </buttongroups>
 </ui>

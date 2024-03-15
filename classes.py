@@ -13,6 +13,7 @@ def matrix_padding(img, size):
 
 class Filter:
     def __init__(self, img):
+        self.current_img = img
         self.img_average = None
         self.img_median = None
         self.img_gaussian = None
