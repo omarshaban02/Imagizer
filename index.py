@@ -1,10 +1,10 @@
 from PyQt5.QtCore import Qt
 import sys
-# from testui import Ui_MainWindow
+from testui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
 import pyqtgraph as pg
 import cv2
-
+from classes import Filter
 # from res_rc import *  # Import the resource module
 from PyQt5.uic import loadUiType
 
@@ -12,37 +12,59 @@ ui, _ = loadUiType('testui.ui')
 
 
 class ImageEditor(QMainWindow, ui):
-    def __init__(self):
-        super(ImageEditor, self).__init__()
+    def _init_(self):
+        super(ImageEditor, self)._init_()
         self.setupUi(self)
 
+        self.plotwidget_set = (self.wgt_input_img, self.wgt_input_img_greyscale, self.wgt_output_img,
+                               self.wgt_histo_red, self.wgt_histo_blue, self.wgt_histo_green,
+                               self.wgt_histo_red_dist, self.wgt_histo_blue_dist, self.wgt_histo_green_dist,
+                               self.wgt_histo_img_colored, self.wgt_histo_img_greyscale, self.wgt_histo_colored,
+                               self.wgt_histo_greyscale, self.wgt_hybrid_img_1, self.wgt_hybrid_img_2,
+                               self.wgt_hybrid_img_output,
+                               self.wgt_hybrid_img_FT_1, self.wgt_hybrid_img_FT_2)
+
         # Create an image item for each plotwidget
-        self.img_item_input, self.img_item_output, self.img_item_greyscale = (pg.ImageItem() for i in range(3))
+        self.image_item_set = [self.item_filter_input, self.item_filter_greyscale, self.item_filter_output,
+                               self.item_histo_red, self.item_histo_blue, self.item_histo_green,
+                               self.item_histo_red_dist, self.item_histo_blue_dist, self.item_histo_green_dist,
+                               self.item_histo_img_colored, self.item_histo_img_grey, self.item_histo_colored,
+                               self.item_histo_grey, self.item_hybrid_1, self.item_hybrid_2, self.item_hybrid_out,
+                               self.item_hybrid_FT_1, self.item_hybrid_FT_2] = [pg.ImageItem() for i in range(18)]
 
         self.loaded_image = None
+        self.loaded_image_second = None
+
         self.setup_plotwidgets()
 
-        # Maps the radio button to the correspoiding slider page's index
-        self.slider_map = {
+        # Maps the radio button to the corresponding slider page's index
+        self.radio_dict_noise = {
 
             self.radio_uniform: 0,
             self.radio_gaus: 1,
-            self.radio_sp: 2
+            self.radio_sp: 2,
+            self.radio_none_noise: 0
         }
 
-        # Connect radio buttons to function that sets sliders according to selection
-        for radio in [self.radio_uniform, self.radio_gaus, self.radio_sp]:
-            radio.toggled.connect(self.set_stacked_widget)
+        self.radio_dict_edges = {
+            self.radio_sobel: 0,
+            self.radio_prewitt: 1,
+            self.radio_roberts: 1,
+            self.radio_canny: 2,
+            self.radio_none_edges: 0
+
+        }
+
+        self.set_radio_button_connections()  # Sets up handling Ui changes according to radio button selection
+
+        self.hide_stuff_at_startup()
 
         # Connect Openfile Action to its function
         self.actionOpen_Image.triggered.connect(self.open_image)
 
-    # TODO - Rename objects and comment to an appropriate object name
-    # Sets the page of the stacked widget based on the radio button selected
-    def set_stacked_widget(self):
-        pressed_radio = self.toolBox.sender()
-        if pressed_radio.isChecked():
-            self.stackedWidget.setCurrentIndex(self.slider_map[pressed_radio])
+        self.filter = None
+
+
 
     def open_image(self):
         file_dialog = QFileDialog(self)
@@ -52,36 +74,87 @@ class ImageEditor(QMainWindow, ui):
         if file_dialog.exec_() == QFileDialog.Accepted:
             selected_file = file_dialog.selectedFiles()[0]
             self.load_img_file(selected_file)
-
+            self.filter = Filter(self.loaded_image)
     def load_img_file(self, image_path):
         # Loads the image using imread, converts it to RGB, then rotates it 90 degrees clockwise
         self.loaded_image = cv2.rotate(cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB), cv2.ROTATE_90_CLOCKWISE)
         greyscale_image = cv2.cvtColor(self.loaded_image, cv2.COLOR_RGB2GRAY)
-        self.display_image(self.img_item_input, self.loaded_image)
-        self.display_image(self.img_item_greyscale, greyscale_image)
+        for color_plot, grey_plot in zip([self.item_filter_input, self.item_histo_img_colored],
+                                         [self.item_filter_greyscale, self.item_histo_img_grey]):
+            self.display_image(color_plot, self.loaded_image)
+            self.display_image(grey_plot, greyscale_image)
 
     def display_image(self, image_item, image):
         image_item.setImage(image)
-        self.remove_plotwidget_margins()
+        image_item.getViewBox().autoRange()
 
     ################################ Misc Functions ################################
 
     def setup_plotwidgets(self):
         for plotwidget in self.findChildren(pg.PlotWidget):
-            # Removes Axes and Padding
-            plotwidget.showAxis('left', False)
-            plotwidget.showAxis('bottom', False)
-            plotitem = plotwidget.getPlotItem()
-            plotitem.getViewBox().setDefaultPadding(0)
+            if plotwidget.objectName().find("histo") == -1 or plotwidget.objectName().find(
+                    "histo_img") != -1 or plotwidget.objectName().find("FT") != -1:
+                # Removes Axes and Padding from all plotwidgets intended to display an image
+                plotwidget.showAxis('left', False)
+                plotwidget.showAxis('bottom', False)
+                plotitem = plotwidget.getPlotItem()
+                plotitem.getViewBox().setDefaultPadding(0)
+
+            else:
+                plotwidget.setTitle(f"{plotwidget.objectName()[10:]}")
 
         # Adds the image items to their corresponsing plot widgets so they can be used later to display images
-        for plotWidget, imgItem in zip([self.wgt_input_img, self.wgt_input_img_greyscale, self.wgt_output_img],
-                                       [self.img_item_input, self.img_item_greyscale, self.img_item_output]):
-            plotWidget.addItem(imgItem)
+        for plotwidget, imgItem in zip(self.plotwidget_set, self.image_item_set):
+            plotwidget.addItem(imgItem)
+            print(f"{imgItem} added to {plotwidget.objectName()} ")
 
-    def remove_plotwidget_margins(self):
-        plotitem = self.wgt_input_img.getPlotItem()
-        plotitem.getViewBox().setDefaultPadding(0)
+    # Sets the page of the stacked widget based on the radio button selected
+    def set_stacked_widget(self, stacked_widget, radio_dict):
+        """sets up page transitions according to radio button selection
+
+        Args:
+            stacked_widget (stackedWidget): the target stackedwidget object
+            radio_dict (dictionary): Dictionary linking each radio button with it's page's index
+        """
+        pressed_radio = self.toolBox.sender()
+        if pressed_radio.isChecked():
+            if pressed_radio.objectName().find("none") != -1:
+                stacked_widget.setVisible(False)
+                print("None pressed...")
+            else:
+                stacked_widget.setVisible(True)
+                stacked_widget.setCurrentIndex(radio_dict[pressed_radio])
+
+    def show_smoothing_options(self):
+        if self.sender().isChecked():
+            # Show the Kernel type option for Gaussian And Laplacian smoothing only
+            if self.sender().text() == "Gaussian" or self.sender().text() == "Laplacian":
+                self.wgt_ktype.setVisible(True)
+
+            elif self.sender().text() == "None":
+                self.wgt_ktype.setVisible(False)
+                self.wgt_smooth_kernel.setVisible(False)
+
+            else:
+                self.wgt_ktype.setVisible(False)
+                self.wgt_smooth_kernel.setVisible(True)
+
+    def set_radio_button_connections(self):
+
+        # Connect noise radio buttons to function that sets visible sliders according to selection
+        for noise_radio in self.radio_dict_noise.keys():
+            noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget, self.radio_dict_noise))
+
+        # Connect edges radio buttons to function that sets visible sliders according to selection
+        for edge_radio in self.radio_dict_edges.keys():
+            edge_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget_edges, self.radio_dict_edges))
+
+        for smooth_radio in self.buttonGroup_smoothing.buttons():
+            smooth_radio.toggled.connect(self.show_smoothing_options)
+
+    def hide_stuff_at_startup(self):
+        for widget in [self.stackedWidget, self.stackedWidget_edges, self.wgt_smooth_kernel, self.wgt_ktype]:
+            widget.setVisible(False)
 
 
 app = QApplication(sys.argv)

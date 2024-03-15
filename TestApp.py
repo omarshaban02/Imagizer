@@ -4,7 +4,7 @@ from testui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
 import pyqtgraph as pg
 import cv2
-
+from classes import Filter
 # from res_rc import *  # Import the resource module
 from PyQt5.uic import loadUiType
 
@@ -15,7 +15,7 @@ class ImageEditor(QMainWindow, ui):
     def __init__(self):
         super(ImageEditor, self).__init__()
         self.setupUi(self)
-
+        self.filter = None
         
         self.plotwidget_set = (self.wgt_input_img, self.wgt_input_img_greyscale, self.wgt_output_img,
                           self.wgt_histo_red, self.wgt_histo_blue, self.wgt_histo_green,
@@ -59,6 +59,9 @@ class ImageEditor(QMainWindow, ui):
 
 
 
+        #connect buttons
+        self.btn_browse_1.clicked.connect(self.open_image)
+
 
         self.set_radio_button_connections() # Sets up handling Ui changes according to radio button selection
         
@@ -78,10 +81,12 @@ class ImageEditor(QMainWindow, ui):
             selected_file = file_dialog.selectedFiles()[0]
             self.load_img_file(selected_file)
 
+
     def load_img_file(self, image_path):
         # Loads the image using imread, converts it to RGB, then rotates it 90 degrees clockwise
         self.loaded_image = cv2.rotate(cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB), cv2.ROTATE_90_CLOCKWISE)
         greyscale_image = cv2.cvtColor(self.loaded_image, cv2.COLOR_RGB2GRAY)
+        self.filter = Filter(greyscale_image)
         for color_plot, grey_plot in zip([self.item_filter_input, self.item_histo_img_colored], [self.item_filter_greyscale, self.item_histo_img_grey]):
             self.display_image(color_plot, self.loaded_image)
             self.display_image(grey_plot, greyscale_image)
@@ -101,11 +106,14 @@ class ImageEditor(QMainWindow, ui):
                 # Removes Axes and Padding from all plotwidgets intended to display an image
                 plotwidget.showAxis('left', False)
                 plotwidget.showAxis('bottom', False)
+                plotwidget.setBackground((25, 30, 40))
                 plotitem = plotwidget.getPlotItem()
                 plotitem.getViewBox().setDefaultPadding(0)
                 
             else:
                 plotwidget.setTitle(f"{plotwidget.objectName()[10:]}")
+                plotwidget.setBackground((25, 35, 45))
+                plotwidget.showGrid(x=True, y=True)
         
         
         # Adds the image items to their corresponsing plot widgets so they can be used later to display images

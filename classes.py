@@ -5,8 +5,10 @@ import threading
 
 
 def matrix_padding(img, size):
-    # Function to pad the image matrix for filter operations
-    return np.pad(img, ((size // 2, size // 2), (size // 2, size // 2)), mode='constant')
+    pad_size = size // 2
+    result = np.zeros((img.shape[0] + 2 * pad_size, img.shape[1] + 2 * pad_size))
+    result[pad_size:img.shape[0] + pad_size, pad_size:img.shape[1] + pad_size] = img
+    return result
 
 
 class Filter:
@@ -18,39 +20,47 @@ class Filter:
         self.img_prewitt = None
         self.img_canny = None
         self.img_sobel = None
-        self.img_laplacian = None
+        self.img_laplace = None
+        self.current_ksize = 3
+        self.gaussian_kernel_number = 1
+        self.laplace_kernel_number = 1
+        self.fft_operation = FourierTransform()
 
         calculations_thread = threading.Thread(target=self.calc_filters, args=(img,))
         calculations_thread.start()
 
     def calc_filters(self, img):
-        self.img_average = self.average(img, 3)
-        self.img_median = self.median(img, 3)
-        self.img_gaussian = self.gaussian_opencv(img, 3, 1.5)
-        self.img_roberts = self.roberts(img)
-        self.img_prewitt = self.prewitt(img)
-        self.img_canny = self.canny(img)
-        self.img_sobel = self.sobel(img)
-        self.img_laplacian = self.laplace(img)
+        self.average(img, 3)
+        self.median(img, 3)
+        self.gaussian(img, 3)
+        self.roberts(img)
+        self.prewitt(img)
+        self.canny(img)
+        self.sobel(img)
+        self.laplace(img)
 
     # Smoothing filters
-    def average(self, img, size):
-        kernel = np.ones((size, size)) / (size * size)
-        return (convolve2d(img, kernel, mode='same', boundary='symm')).astype(np.uint8)
+    def average(self, img, ksize):
+        kernel = np.ones((ksize, ksize)) / (ksize * ksize)
+        self.current_ksize = ksize
+        result = (convolve2d(matrix_padding(img, ksize), kernel, mode='same', boundary='symm')).astype(np.uint8)
+        self.img_average = result
+        return result
 
-    def median(self, img, size):
+    def median(self, img, ksize):
         result = np.zeros_like(img)
+        img_padded = matrix_padding(img, ksize)
 
-        for i in range(1, img.shape[0] - 1):
-            for j in range(1, img.shape[1] - 1):
-                window = img[i - 1:i + 2, j - 1:j + 2].flatten()
-                result[i, j] = np.median(window)
+        half_size = ksize // 2
 
-        return (result).astype(np.uint8)
+        for i in range(half_size, img_padded.shape[0] - half_size):
+            for j in range(half_size, img_padded.shape[1] - half_size):
+                window = img_padded[i - half_size:i + half_size + 1, j - half_size:j + half_size + 1].flatten()
+                result[i - half_size, j - half_size] = np.median(window)
 
-    def gaussian_opencv(self, img, size, sigma):
-        kernel = cv2.getGaussianKernel(size, sigma)
-        return (convolve2d(matrix_padding(img, size), kernel, mode='same', boundary='symm')).astype(np.uint8)
+        self.current_ksize = ksize
+        self.img_median = result.astype(np.uint8)
+        return result.astype(np.uint8)
 
     def gaussian(self, img, kernel_number=1):
         if kernel_number == 1:
@@ -58,7 +68,11 @@ class Filter:
         else:
             kernel = np.array([[1, 2, 1], [2, 4, 2], [1, 2, 1]])
 
-        return (convolve2d(img, kernel, mode='same', boundary='')).astype(np.uint8)
+        result = convolve2d(img, kernel, mode='same', boundary='fill')
+        result = np.clip(result, 0, 255).astype(np.uint8)  # Ensure result values are within [0, 255]
+        self.img_gaussian = result
+        self.gaussian_kernel_number = kernel_number
+        return result
 
     # Edge detection operators
 
@@ -71,7 +85,9 @@ class Filter:
         grad1 = convolve2d(img, k1, mode='same', boundary='symm')
         grad2 = convolve2d(img, k2, mode='same', boundary='symm')
 
-        return (np.abs(grad1) + np.abs(grad2)).astype(np.uint8)
+        result = (np.abs(grad1) + np.abs(grad2)).astype(np.uint8)
+        self.img_roberts = result
+        return result
 
     def prewitt(self, img):
         kernel_x = np.array([[-1, 0, 1],
@@ -84,7 +100,9 @@ class Filter:
         grad_x = convolve2d(img, kernel_x, mode='same', boundary='symm')
         grad_y = convolve2d(img, kernel_y, mode='same', boundary='symm')
 
-        return (np.sqrt(grad_x ** 2 + grad_y ** 2)).astype(np.uint8)
+        result = (np.sqrt(grad_x ** 2 + grad_y ** 2)).astype(np.uint8)
+        self.img_prewitt = result
+        return result
 
     def sobel(self, img):
         kernel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
@@ -93,13 +111,16 @@ class Filter:
         grad_x = np.abs(convolve2d(img, kernel_x, mode='same', boundary='symm'))
         grad_y = np.abs(convolve2d(img, kernel_y, mode='same', boundary='symm'))
 
-        return (grad_x + grad_y).astype(np.uint8)
+        result = (grad_x + grad_y).astype(np.uint8)
+        self.img_sobel = result
+        return result
 
     # # Using 2nd derivative operators
 
     def canny(self, img, sigma=1.0, low_threshold=30, high_threshold=60, ksize=3):
         blurred_img = cv2.GaussianBlur(img, (ksize, ksize), sigma)
         edges = cv2.Canny(blurred_img, low_threshold, high_threshold)
+        self.img_canny = edges.astype(np.uint8)
         return edges.astype(np.uint8)
 
     def laplace(self, img, kernel_number=1):
@@ -114,8 +135,9 @@ class Filter:
 
         laplace_result = convolve2d(img, laplace_kernel, mode='same', boundary='symm')
 
-        # Convert to uint8 to ensure correct data type for image display and saving
         laplace_result = laplace_result.astype(np.uint8)
+        self.img_laplace = laplace_result
+        self.laplace_kernel_number = kernel_number
 
         return laplace_result
 
@@ -159,6 +181,35 @@ class Filter:
                 thresholded[i, j] = max_value if image[i, j] > threshold_value else 0
         return thresholded
 
+    def hybrid_images(self, image1_path, image2_path, low_threshold=10, low_gain=1, high_threshold=10, high_gain=1):
+        image1 = cv2.imread(image1_path)
+        image2 = cv2.imread(image2_path)
+        image2= cv2.resize(image2, (image1.shape[1], image1.shape[0]))
+
+        image1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+        image2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+
+        # Use FourierTransform instance to call methods
+        image1_fft = self.fft_operation.get_img_fft(image1_gray)
+        image2_fft = self.fft_operation.get_img_fft(image2_gray)
+
+        image1_low_pass_fft = self.fft_operation.low_pass_filter(image1_fft, low_threshold, low_gain)
+        image2_high_pass_fft = self.fft_operation.high_pass_filter(image2_fft, high_threshold, high_gain)
+
+        image1_low_pass_filter = self.fft_operation.get_inverse_fft(image1_low_pass_fft)
+        image2_high_pass_filter = self.fft_operation.get_inverse_fft(image2_high_pass_fft)
+
+        hybrid_image = image1_low_pass_filter + image2_high_pass_filter
+
+        # If you're not interested in complex numbers, you can take the real part
+        hybrid_image = np.real(hybrid_image)
+
+        # Normalize and convert to uint8
+        hybrid_image = cv2.normalize(hybrid_image, None, 0, 255, cv2.NORM_MINMAX)
+        hybrid_image = np.uint8(hybrid_image)
+
+        return hybrid_image
+
 
 class FourierTransform:
     def __init__(self):
@@ -176,7 +227,7 @@ class FourierTransform:
         img_fft = np.fft.ifftshift(img_fft_shifted)
         img = np.fft.ifft2(img_fft)
 
-        return img.astype(np.uint8)
+        return img
 
     def low_pass_filter(self, img_fft, threshold, gain):
         mask = np.zeros_like(img_fft)
@@ -217,10 +268,10 @@ def add_uniform_noise(image, intensity=50):
     Args:
         image (numpy.ndarry): Input image.
         intensity (int): Intensity of uniform noise.
-        
+
     Returns:
         noisy_image (numpy.ndarray): The image after applying noise modifier.
-        
+
     """
 
     noisy_image = np.copy(image)
@@ -228,3 +279,4 @@ def add_uniform_noise(image, intensity=50):
     noisy_image = cv2.add(image, noise)
 
     return noisy_image
+

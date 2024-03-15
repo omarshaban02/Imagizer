@@ -236,16 +236,33 @@ QPushButton:pressed {
  font-size: 15px;
 }
 /*----------------------------------------------------------------------------------------*/
-QTabWidget::header{
-background-color: #19232D;
-  border: 0px solid #455364;
-  padding: 0px;
-  color: #E0E1E3;
-  selection-background-color: #346792;
-  selection-color: #E0E1E3;
-	font-family : Ubuntu;
-font-size: 20px;
-font-weight: bold; 
+QTabBar::tab {
+    background-color: #455364;
+    border: 3px solid #19232D;
+    border-radius: 10px;
+    padding: 5px;
+    color: #E0E1E3;
+    font-family: Ubuntu;
+    font-size: 20px;
+    font-weight: bold;
+}
+QTabBar::tab {
+    background-color: #455364;
+    border: 3px solid #19232D;
+    border-radius: 10px;
+    padding: 3px;
+    color: #E0E1E3;
+    font-family: Ubuntu;
+    font-size: 20px;
+    font-weight: bold;
+}
+QTabBar::tab:selected {
+    background-color:rgba(69,83,100,80%);
+    color: #E0E1E3;
+	margin-top: 2px
+}
+QPlotWidget{
+ background-color:(25, 35, 45, 0.8)
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -264,6 +281,9 @@ font-weight: bold;
     </property>
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -296,7 +316,7 @@ font-weight: bold;
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">background:green</string>
+           <string notr="true"/>
           </property>
          </widget>
         </item>
@@ -309,7 +329,7 @@ font-weight: bold;
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">background:green</string>
+           <string notr="true"/>
           </property>
          </widget>
         </item>
@@ -322,7 +342,7 @@ font-weight: bold;
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">background:green</string>
+           <string notr="true"/>
           </property>
          </widget>
         </item>
@@ -334,8 +354,11 @@ font-weight: bold;
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="tabSpacing">
            <number>7</number>
@@ -345,8 +368,8 @@ font-weight: bold;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>374</width>
-             <height>554</height>
+             <width>334</width>
+             <height>546</height>
             </rect>
            </property>
            <attribute name="label">
@@ -387,6 +410,9 @@ font-weight: bold;
                     </property>
                     <item>
                      <widget class="QRadioButton" name="radio_uniform">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Uniform</string>
                       </property>
@@ -400,6 +426,9 @@ font-weight: bold;
                     </item>
                     <item>
                      <widget class="QRadioButton" name="radio_gaus">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Gaussian</string>
                       </property>
@@ -410,6 +439,9 @@ font-weight: bold;
                     </item>
                     <item>
                      <widget class="QRadioButton" name="radio_sp">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Salt and Pepper</string>
                       </property>
@@ -422,6 +454,9 @@ font-weight: bold;
                   </item>
                   <item row="0" column="1">
                    <widget class="QRadioButton" name="radio_none_noise">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
                     <property name="text">
                      <string>None</string>
                     </property>
@@ -506,6 +541,9 @@ font-weight: bold;
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
+                          </property>
+                          <property name="cursor">
+                           <cursorShape>OpenHandCursor</cursorShape>
                           </property>
                           <property name="maximum">
                            <number>100</number>
@@ -739,6 +777,9 @@ font-weight: bold;
                    <layout class="QVBoxLayout" name="verticalLayout_13">
                     <item>
                      <widget class="QRadioButton" name="radio_average">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Average</string>
                       </property>
@@ -749,6 +790,9 @@ font-weight: bold;
                     </item>
                     <item>
                      <widget class="QRadioButton" name="radio_median">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Median</string>
                       </property>
@@ -762,6 +806,9 @@ font-weight: bold;
                     </item>
                     <item>
                      <widget class="QRadioButton" name="radio_gauss_smooth">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Gaussian</string>
                       </property>
@@ -786,6 +833,9 @@ font-weight: bold;
                        </item>
                        <item>
                         <widget class="QSlider" name="horizontalSlider">
+                         <property name="cursor">
+                          <cursorShape>OpenHandCursor</cursorShape>
+                         </property>
                          <property name="minimum">
                           <number>3</number>
                          </property>
@@ -829,6 +879,9 @@ font-weight: bold;
                         <layout class="QHBoxLayout" name="horizontalLayout_16">
                          <item>
                           <widget class="QRadioButton" name="radioButton_3">
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
+                           </property>
                            <property name="text">
                             <string>1</string>
                            </property>
@@ -839,6 +892,9 @@ font-weight: bold;
                          </item>
                          <item>
                           <widget class="QRadioButton" name="radioButton_4">
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
+                           </property>
                            <property name="text">
                             <string>2</string>
                            </property>
@@ -858,6 +914,9 @@ font-weight: bold;
                    <layout class="QVBoxLayout" name="verticalLayout_15">
                     <item>
                      <widget class="QRadioButton" name="radio_gauss_smooth_2">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>Laplacian</string>
                       </property>
@@ -868,6 +927,9 @@ font-weight: bold;
                     </item>
                     <item>
                      <widget class="QRadioButton" name="radio_none_smooth">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="text">
                        <string>None</string>
                       </property>
@@ -894,8 +956,8 @@ font-weight: bold;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>374</width>
-             <height>554</height>
+             <width>358</width>
+             <height>551</height>
             </rect>
            </property>
            <attribute name="label">
@@ -922,6 +984,9 @@ font-weight: bold;
                  <layout class="QVBoxLayout" name="verticalLayout_10">
                   <item>
                    <widget class="QRadioButton" name="radio_sobel">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
                     <property name="text">
                      <string>Sobel</string>
                     </property>
@@ -929,6 +994,9 @@ font-weight: bold;
                   </item>
                   <item>
                    <widget class="QRadioButton" name="radio_roberts">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
                     <property name="text">
                      <string>Roberts</string>
                     </property>
@@ -936,6 +1004,9 @@ font-weight: bold;
                   </item>
                   <item>
                    <widget class="QRadioButton" name="radio_prewitt">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
                     <property name="text">
                      <string>Prewitt</string>
                     </property>
@@ -943,6 +1014,9 @@ font-weight: bold;
                   </item>
                   <item>
                    <widget class="QRadioButton" name="radio_canny">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
                     <property name="text">
                      <string>Canny</string>
                     </property>
@@ -950,6 +1024,9 @@ font-weight: bold;
                   </item>
                   <item>
                    <widget class="QRadioButton" name="radio_none_edges">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
                     <property name="text">
                      <string>None</string>
                     </property>
@@ -976,9 +1053,9 @@ font-weight: bold;
                   <enum>QFrame::Raised</enum>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
-                 <widget class="QWidget" name="page_edges_size" native="true">
+                 <widget class="QWidget" name="page_edges_size">
                   <layout class="QGridLayout" name="gridLayout_11">
                    <item row="0" column="0">
                     <widget class="QFrame" name="frame_3">
@@ -998,6 +1075,9 @@ font-weight: bold;
                       </item>
                       <item>
                        <widget class="QSlider" name="slider_kernel_size">
+                        <property name="cursor">
+                         <cursorShape>OpenHandCursor</cursorShape>
+                        </property>
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -1163,8 +1243,8 @@ font-weight: bold;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>374</width>
-             <height>554</height>
+             <width>153</width>
+             <height>143</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1175,6 +1255,9 @@ font-weight: bold;
              <layout class="QVBoxLayout" name="verticalLayout_19">
               <item>
                <widget class="QRadioButton" name="radio_local">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Local</string>
                 </property>
@@ -1185,6 +1268,9 @@ font-weight: bold;
               </item>
               <item>
                <widget class="QRadioButton" name="radio_global">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Global</string>
                 </property>
@@ -1229,6 +1315,9 @@ font-weight: bold;
               </item>
               <item>
                <widget class="QSlider" name="slider_thresholding">
+                <property name="cursor">
+                 <cursorShape>OpenHandCursor</cursorShape>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -1265,7 +1354,7 @@ font-weight: bold;
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:lightblue</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -1278,7 +1367,7 @@ font-weight: bold;
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:crimson</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -1295,7 +1384,7 @@ font-weight: bold;
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:lightblue</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -1308,7 +1397,7 @@ font-weight: bold;
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:crimson</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -1325,7 +1414,7 @@ font-weight: bold;
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:lightblue</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -1338,7 +1427,7 @@ font-weight: bold;
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background:crimson</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -1415,6 +1504,255 @@ font-weight: bold;
        </layout>
       </widget>
       <widget class="QWidget" name="tab_hybrid">
+       <property name="styleSheet">
+        <string notr="true">QWidget {
+  background-color: #19232D;
+  border: 0px solid #455364;
+  padding: 0px;
+  color: #E0E1E3;
+  selection-background-color: #346792;
+  selection-color: #E0E1E3;
+	font-family : Ubuntu;
+font-size: 20px;
+font-weight: bold;
+}
+
+QWidget:disabled {
+  background-color: #19232D;
+  color: #9DA9B5;
+  selection-background-color: #26486B;
+  selection-color: #9DA9B5;
+}
+
+QWidget::item:selected {
+  background-color: #176B87;
+}
+
+QWidget::item:hover:!selected {
+  background-color: rgba(23, 107, 135,50%);
+}
+
+QMainWindow::separator {
+  background-color: #455364;
+  border: 0px solid #19232D;
+  spacing: 0px;
+  padding: 2px;
+}
+
+QMainWindow::separator:hover {
+  background-color: #60798B;
+  border: 0px solid #1A72BB;
+}
+
+/*-------------------------------------------------------------------------------------------*/
+
+QCheckBox {
+  background-color: #FAFAFA;
+  color: #19232D;
+  spacing: 4px;
+  outline: none;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+
+
+QCheckBox QWidget:disabled {
+  background-color: #FAFAFA;
+  color: #788D9C;
+}
+
+QCheckBox::indicator {
+  margin-left: 2px;
+  height: 14px;
+  width: 14px;
+}
+
+/*-------------------------------------------------------------------------------------------*/
+QScrollBar:horizontal {
+  height: 16px;
+  margin: 2px 16px 2px 16px;
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: rgb(25, 35, 45);
+}
+
+QScrollBar::handle:horizontal {
+  background-color: #176B87;
+  border: 1px solid #C9CDD0;
+  border-radius: 4px;
+  min-width: 8px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: rgba(23, 107, 135,80%);
+  border:#4169E1;
+  border-radius: 4px;
+  min-width: 8px;
+}
+
+QScrollBar::handle:horizontal:focus {
+  border: 1px solid red;
+}
+QScrollBar:vertical {
+  background-color: rgb(25, 35, 45);
+  width: 16px;
+  margin: 16px 2px 16px 2px;
+  border: 1px solid white;
+  border-radius: 4px;
+}
+
+
+QScrollBar::handle:vertical {
+  background-color: #176B87;
+  border: 1px solid #C9CDD0;
+  min-height: 8px;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+  background-color: rgba(23, 107, 135,80%);
+  border: #9FCBFF;
+  border-radius: 4px;
+  min-height: 8px;
+}
+
+QScrollBar::handle:vertical:focus {
+  border: 1px solid #73C7FF;
+}
+
+
+QScrollBar::add-line:horizontal {
+  margin: 0px 0px 0px 0px;
+  border-image: url(&quot;qss_icons/light/rc/arrow_right_disabled.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:horizontal:hover, QScrollBar::add-line:horizontal:on {
+  border-image: url(&quot;qss_icons/light/rc/arrow_right.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical {
+  margin: 3px 0px 3px 0px;
+  border-image: url(&quot;qss_icons/light/rc/arrow_down_disabled.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
+  border-image: url(&quot;qss_icons/light/rc/arrow_down.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+  margin: 0px 3px 0px 3px;
+  border-image: url(&quot;qss_icons/light/rc/arrow_left_disabled.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal:hover, QScrollBar::sub-line:horizontal:on {
+  border-image: url(&quot;qss_icons/light/rc/arrow_left.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+  margin: 3px 0px 3px 0px;
+  border-image: url(&quot;qss_icons/light/rc/arrow_up_disabled.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
+  border-image: url(&quot;qss_icons/light/rc/arrow_up.png&quot;);
+  height: 12px;
+  width: 12px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal {
+  background: none;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+  background: none;
+}
+
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+  background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+  background: none;
+}
+
+/*----------------------------------------------------------------------------------------*/
+QPushButton{
+ /*border:2px solid #05B8CC;*/
+ background-color: #176B87;
+ color:rgb(255, 255, 255);
+ border-radius: 10px;
+ font-weight:bold;
+ font-size:16px;
+  transition: 500ms;
+}
+
+QPushButton::hover{
+ border: 1px solid #176B87;
+ background-color: rgba(23, 107, 135,80%)
+}
+QPushButton:pressed {
+ margin:1px 2px;
+ font-size: 15px;
+}
+/*----------------------------------------------------------------------------------------*/
+QTabBar::tab {
+    background-color: #455364;
+    border: 3px solid #19232D;
+    border-radius: 10px;
+    padding: 5px;
+    color: #E0E1E3;
+    font-family: Ubuntu;
+    font-size: 20px;
+    font-weight: bold;
+}
+QTabBar::tab {
+    background-color: #455364;
+    border: 3px solid #19232D;
+    border-radius: 10px;
+    padding: 3px;
+    color: #E0E1E3;
+    font-family: Ubuntu;
+    font-size: 20px;
+    font-weight: bold;
+}
+QTabBar::tab:selected {
+    background-color:rgba(69,83,100,80%);
+    color: #E0E1E3;
+	margin-top: 2px
+}</string>
+       </property>
        <attribute name="title">
         <string>Hybrid Image</string>
        </attribute>
@@ -1506,12 +1844,32 @@ font-weight: bold;
                 </widget>
                </item>
                <item>
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
                 <widget class="QPushButton" name="btn_browse_1">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:4px;
+font-size: 18px;</string>
                  </property>
                  <property name="text">
                   <string>Browse</string>
@@ -1530,12 +1888,32 @@ font-weight: bold;
                 </widget>
                </item>
                <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
                 <widget class="QPushButton" name="btn_browse_2">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:4px;
+font-size: 18px;</string>
                  </property>
                  <property name="text">
                   <string>Browse</string>
@@ -1559,6 +1937,17 @@ font-weight: bold;
               <layout class="QHBoxLayout" name="horizontalLayout_12">
                <item alignment="Qt::AlignHCenter">
                 <widget class="QRadioButton" name="radioButton">
+                 <property name="font">
+                  <font>
+                   <family>Ubuntu</family>
+                   <pointsize>-1</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="text">
                   <string>Image 1</string>
                  </property>
@@ -1569,6 +1958,9 @@ font-weight: bold;
                </item>
                <item alignment="Qt::AlignHCenter">
                 <widget class="QRadioButton" name="radioButton_2">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="text">
                   <string>Image 2</string>
                  </property>
@@ -1606,6 +1998,9 @@ font-weight: bold;
              </item>
              <item>
               <widget class="QSlider" name="horizontalSlider_2">
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -1866,7 +2261,7 @@ font-weight: bold;
  </connections>
  <buttongroups>
   <buttongroup name="buttonGroup_edges"/>
-  <buttongroup name="buttonGroup_smoothing"/>
   <buttongroup name="buttonGroup_noise"/>
+  <buttongroup name="buttonGroup_smoothing"/>
  </buttongroups>
 </ui>
