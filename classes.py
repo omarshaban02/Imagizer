@@ -350,30 +350,9 @@ class Filter:
                 thresholded[i, j] = max_value if image[i, j] > threshold_value else 0
         return thresholded
 
-    def hybrid_images(self, image1_path, image2_path, low_threshold=10, low_gain=1, high_threshold=10, high_gain=1):
-        image1 = cv2.imread(image1_path)
-        image2 = cv2.imread(image2_path)
-        image2 = cv2.resize(image2, (image1.shape[1], image1.shape[0]))
-
-        image1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-        image2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
-
-        # Use FourierTransform instance to call methods
-        image1_fft = self.fft_operation.get_img_fft(image1_gray)
-        image2_fft = self.fft_operation.get_img_fft(image2_gray)
-
-        image1_low_pass_fft = self.fft_operation.low_pass_filter(image1_fft, low_threshold, low_gain)
-        image2_high_pass_fft = self.fft_operation.high_pass_filter(image2_fft, high_threshold, high_gain)
-
-        image1_low_pass_filter = self.fft_operation.get_inverse_fft(image1_low_pass_fft)
-        image2_high_pass_filter = self.fft_operation.get_inverse_fft(image2_high_pass_fft)
-
+    def hybrid_images(self, image1_low_pass_filter, image2_high_pass_filter, low_threshold=10, low_gain=1, high_threshold=10, high_gain=1):
         hybrid_image = image1_low_pass_filter + image2_high_pass_filter
-
-        # If you're not interested in complex numbers, you can take the real part
         hybrid_image = np.real(hybrid_image)
-
-        # Normalize and convert to uint8
         hybrid_image = cv2.normalize(hybrid_image, None, 0, 255, cv2.NORM_MINMAX)
         hybrid_image = np.uint8(hybrid_image)
 
