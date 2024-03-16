@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from scipy.signal import convolve2d
 import threading
+from scipy.ndimage import median_filter
 
 
 def matrix_padding(img, size):
@@ -12,7 +13,35 @@ def matrix_padding(img, size):
 
 
 class Filter:
+    """
+    A class used to apply various filters to an image.
+
+    Attributes:
+        current_img (numpy.ndarray): The current image to be processed.
+        img_average (numpy.ndarray): The image after applying the average filter.
+        img_median (numpy.ndarray): The image after applying the median filter.
+        img_gaussian (numpy.ndarray): The image after applying the Gaussian filter.
+        img_roberts (numpy.ndarray): The image after applying the Roberts operator.
+        img_prewitt (numpy.ndarray): The image after applying the Prewitt operator.
+        img_canny (numpy.ndarray): The image after applying the Canny edge detection.
+        img_sobel (numpy.ndarray): The image after applying the Sobel operator.
+        img_laplace (numpy.ndarray): The image after applying the Laplace filter.
+        current_ksize (int): The current kernel size.
+        gaussian_kernel_number (int): The number of the Gaussian kernel to be used.
+        laplace_kernel_number (int): The number of the Laplace kernel to be used.
+        canny_sigma (float): The standard deviation for the Gaussian kernel in Canny edge detection.
+        canny_low_threshold (int): The low threshold for hysteresis in Canny edge detection.
+        canny_high_threshold (int): The high threshold for hysteresis in Canny edge detection.
+        fft_operation (FourierTransform): An instance of the FourierTransform class.
+    """
+
     def __init__(self, img):
+        """
+        The constructor for the Filter class.
+
+        Parameters:
+            img (numpy.ndarray): The image to be processed.
+        """
         self.current_img = img
         self.img_average = None
         self.img_median = None
@@ -25,12 +54,22 @@ class Filter:
         self.current_ksize = 3
         self.gaussian_kernel_number = 1
         self.laplace_kernel_number = 1
+        self.canny_sigma = 1.0
+        self.canny_low_threshold = 30
+        self.canny_high_threshold = 60
+
         self.fft_operation = FourierTransform()
 
         calculations_thread = threading.Thread(target=self.calc_filters, args=(img,))
         calculations_thread.start()
 
     def calc_filters(self, img):
+        """
+        Apply all filters to the image.
+
+        Parameters:
+            img (numpy.ndarray): The image to be processed.
+        """
         self.average(img, 3)
         self.median(img, 3)
         self.gaussian(img, 3)
@@ -42,6 +81,19 @@ class Filter:
 
     # Smoothing filters
     def average(self, img, ksize):
+        """
+        Apply average filter to an image.
+
+        The average filter is a simple sliding window spatial filter that replaces the center value in the window
+        with the average (mean) of all the pixel values in the window.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+            ksize (int): Kernel size.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the average filter.
+        """
         kernel = np.ones((ksize, ksize)) / (ksize * ksize)
         self.current_ksize = ksize
         result = (convolve2d(matrix_padding(img, ksize), kernel, mode='same', boundary='symm')).astype(np.uint8)
@@ -49,6 +101,19 @@ class Filter:
         return result
 
     def median(self, img, ksize):
+        """
+        Apply median filter to an image.
+
+        The median filter is a non-linear digital filtering technique, often used to remove noise from an image or
+        signal.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+            ksize (int): Kernel size.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the median filter.
+        """
         result = np.zeros_like(img)
         img_padded = matrix_padding(img, ksize)
 
@@ -63,23 +128,67 @@ class Filter:
         self.img_median = result.astype(np.uint8)
         return result.astype(np.uint8)
 
-    def gaussian(self, img, kernel_number=1):
-        if kernel_number == 1:
-            kernel = np.array([[1, 1, 1], [1, 2, 1], [1, 1, 1]])
-        else:
-            kernel = np.array([[1, 2, 1], [2, 4, 2], [1, 2, 1]])
+    def median_scipy(self, img, ksize):
+        """
+        Apply median filter to an image using SciPy.
 
-        result = convolve2d(img, kernel, mode='same', boundary='fill')
-        result = np.clip(result, 0, 255).astype(np.uint8)  # Ensure result values are within [0, 255]
+        The median filter is a non-linear digital filtering technique, often used to remove noise from an image or
+        signal.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+            ksize (int): Kernel size.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the median filter.
+        """
+        result = median_filter(img, size=ksize)
+
+        self.current_ksize = ksize
+        self.img_median = result.astype(np.uint8)
+        return result.astype(np.uint8)
+
+    def gaussian(self, img, kernel_number=1):
+        """
+        Apply Gaussian filter to an image.
+
+        The Gaussian filter is a type of convolution filter that is used to 'blur' the image or reduce detail and noise.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+            kernel_number (int): Determines the type of Gaussian kernel to be used.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the Gaussian filter.
+        """
+        if kernel_number == 1:
+            kernel = (1 / 12) * np.array([[1, 1, 1],
+                                          [1, 4, 1],
+                                          [1, 1, 1]])
+        else:
+            kernel = (1 / 126) * np.array([[1, 1, 1, 1, 1],
+                                           [1, 5, 10, 5, 1],
+                                           [1, 10, 50, 10, 1],
+                                           [1, 5, 10, 5, 1],
+                                           [1, 1, 1, 1, 1]])
+
+        result = convolve2d(img, kernel, mode='same', boundary='symm').astype(np.uint8)
         self.img_gaussian = result
         self.gaussian_kernel_number = kernel_number
         return result
 
-    # Edge detection operators
-
-    # # Using 1st derivative operators
-
     def roberts(self, img):
+        """
+        Apply Roberts operator to an image.
+
+        The Roberts Cross operator performs a simple, quick to compute, 2-D spatial gradient measurement on an image.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the Roberts operator.
+        """
         k1 = np.array([[1, 0], [0, -1]])
         k2 = np.array([[0, 1], [-1, 0]])
 
@@ -91,9 +200,21 @@ class Filter:
         return result
 
     def prewitt(self, img):
+        """
+        Apply Prewitt operator to an image.
+
+        The Prewitt operator is used in image processing, particularly within edge detection algorithms.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the Prewitt operator.
+        """
         kernel_x = np.array([[-1, 0, 1],
                              [-1, 0, 1],
                              [-1, 0, 1]])
+
         kernel_y = np.array([[-1, -1, -1],
                              [0, 0, 0],
                              [1, 1, 1]])
@@ -106,6 +227,18 @@ class Filter:
         return result
 
     def sobel(self, img):
+        """
+        Apply Sobel operator to an image.
+
+        The Sobel operator is used in image processing and computer vision, particularly within edge detection
+        algorithms.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+
+        Returns:
+            result (numpy.ndarray): The image after applying the Sobel operator.
+        """
         kernel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
         kernel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
 
@@ -116,15 +249,46 @@ class Filter:
         self.img_sobel = result
         return result
 
-    # # Using 2nd derivative operators
-
     def canny(self, img, sigma=1.0, low_threshold=30, high_threshold=60, ksize=3):
+        """
+        Apply Canny edge detection to an image.
+
+        The Canny edge detector is an edge detection operator that uses a multi-stage algorithm to detect a wide
+        range of edges in images.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+            sigma (float): Standard deviation for Gaussian kernel.
+            low_threshold (int): Low threshold for hysteresis.
+            high_threshold (int): High threshold for hysteresis.
+            ksize (int): Kernel size.
+
+        Returns:
+            edges (numpy.ndarray): The image after applying the Canny edge detection.
+        """
         blurred_img = cv2.GaussianBlur(img, (ksize, ksize), sigma)
         edges = cv2.Canny(blurred_img, low_threshold, high_threshold)
         self.img_canny = edges.astype(np.uint8)
         return edges.astype(np.uint8)
 
     def laplace(self, img, kernel_number=1):
+        """
+        Apply Laplace filter to an image.
+
+        The Laplace filter is used for edge detection. It calculates the second derivative of the image,
+        where the edges are the zero crossings. This function provides two types of Laplace kernels.
+
+        Parameters:
+            img (numpy.ndarray): Input image.
+            kernel_number (int): Determines the type of Laplace kernel to be used.
+                                 If 1, uses a 3x3 kernel with -8 at the center and rest 1.
+                                 Otherwise, uses a 3x3 kernel with -4 at the center and rest 1.
+
+        Returns:
+            laplace_result (numpy.ndarray): The image after applying the Laplace filter.
+        """
+
+        # Choose the Laplace kernel based on the kernel_number
         if kernel_number == 1:
             laplace_kernel = np.array([[1, 1, 1],
                                        [1, -8, 1],
@@ -134,9 +298,13 @@ class Filter:
                                        [1, -4, 1],
                                        [0, 1, 0]])
 
+        # Apply the Laplace kernel to the image
         laplace_result = convolve2d(img, laplace_kernel, mode='same', boundary='symm')
 
+        # Convert the result to uint8
         laplace_result = laplace_result.astype(np.uint8)
+
+        # Store the result and the kernel number in the instance
         self.img_laplace = laplace_result
         self.laplace_kernel_number = kernel_number
 
@@ -185,7 +353,7 @@ class Filter:
     def hybrid_images(self, image1_path, image2_path, low_threshold=10, low_gain=1, high_threshold=10, high_gain=1):
         image1 = cv2.imread(image1_path)
         image2 = cv2.imread(image2_path)
-        image2= cv2.resize(image2, (image1.shape[1], image1.shape[0]))
+        image2 = cv2.resize(image2, (image1.shape[1], image1.shape[0]))
 
         image1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
         image2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
@@ -216,7 +384,8 @@ class FourierTransform:
     def __init__(self):
         pass
 
-    def get_img_fft(self, img):
+    @staticmethod
+    def get_img_fft(img):
         img_fft = np.fft.fft2(img)
 
         # apply shift
@@ -224,20 +393,23 @@ class FourierTransform:
 
         return img_fft_shifted
 
-    def get_inverse_fft(self, img_fft_shifted):
+    @staticmethod
+    def get_inverse_fft(img_fft_shifted):
         img_fft = np.fft.ifftshift(img_fft_shifted)
         img = np.fft.ifft2(img_fft)
 
         return img
 
-    def low_pass_filter(self, img_fft, threshold, gain):
+    @staticmethod
+    def low_pass_filter(img_fft, threshold, gain):
         mask = np.zeros_like(img_fft)
         rows, cols = img_fft.shape
         center_row, center_col = rows // 2, cols // 2
         mask[center_row - threshold:center_row + threshold, center_col - threshold:center_col + threshold] = gain
         return img_fft * mask
 
-    def high_pass_filter(self, img_fft, threshold, gain):
+    @staticmethod
+    def high_pass_filter(img_fft, threshold, gain):
         mask = np.ones_like(img_fft) * gain
         rows, cols = img_fft.shape
         center_row, center_col = rows // 2, cols // 2
@@ -275,9 +447,7 @@ def add_uniform_noise(image, intensity=50):
 
     """
 
-    noisy_image = np.copy(image)
     noise = np.random.uniform(-intensity, intensity, image.shape).astype('uint8')
     noisy_image = cv2.add(image, noise)
 
     return noisy_image
-

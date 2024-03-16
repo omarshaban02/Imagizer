@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1159</width>
-    <height>786</height>
+    <height>818</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -358,7 +358,7 @@ QPlotWidget{
            <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="tabSpacing">
            <number>7</number>
@@ -369,7 +369,7 @@ QPlotWidget{
              <x>0</x>
              <y>0</y>
              <width>374</width>
-             <height>548</height>
+             <height>580</height>
             </rect>
            </property>
            <attribute name="label">
@@ -543,7 +543,7 @@ QPlotWidget{
                            </sizepolicy>
                           </property>
                           <property name="cursor">
-                           <cursorShape>OpenHandCursor</cursorShape>
+                           <cursorShape>PointingHandCursor</cursorShape>
                           </property>
                           <property name="maximum">
                            <number>100</number>
@@ -819,6 +819,26 @@ QPlotWidget{
                     </item>
                    </layout>
                   </item>
+                  <item row="1" column="1">
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <item>
+                     <widget class="QRadioButton" name="radio_none_smooth">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="text">
+                       <string>None</string>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                      <attribute name="buttonGroup">
+                       <string notr="true">buttonGroup_smoothing</string>
+                      </attribute>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
                   <item row="2" column="0" colspan="2">
                    <layout class="QHBoxLayout" name="horizontalLayout_17">
                     <item>
@@ -834,13 +854,13 @@ QPlotWidget{
                        <item>
                         <widget class="QSlider" name="kernel_size_slider">
                          <property name="cursor">
-                          <cursorShape>OpenHandCursor</cursorShape>
+                          <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="minimum">
                           <number>3</number>
                          </property>
                          <property name="maximum">
-                          <number>7</number>
+                          <number>11</number>
                          </property>
                          <property name="singleStep">
                           <number>2</number>
@@ -878,7 +898,7 @@ QPlotWidget{
                        <item row="1" column="0">
                         <layout class="QHBoxLayout" name="horizontalLayout_16">
                          <item>
-                          <widget class="QRadioButton" name="radioButton_3">
+                          <widget class="QRadioButton" name="radio_kernal_one">
                            <property name="cursor">
                             <cursorShape>PointingHandCursor</cursorShape>
                            </property>
@@ -891,7 +911,7 @@ QPlotWidget{
                           </widget>
                          </item>
                          <item>
-                          <widget class="QRadioButton" name="radioButton_4">
+                          <widget class="QRadioButton" name="radio_kernal_two">
                            <property name="cursor">
                             <cursorShape>PointingHandCursor</cursorShape>
                            </property>
@@ -910,39 +930,6 @@ QPlotWidget{
                     </item>
                    </layout>
                   </item>
-                  <item row="1" column="1">
-                   <layout class="QVBoxLayout" name="verticalLayout_15">
-                    <item>
-                     <widget class="QRadioButton" name="radio_gauss_smooth_2">
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="text">
-                       <string>Laplacian</string>
-                      </property>
-                      <attribute name="buttonGroup">
-                       <string notr="true">buttonGroup_smoothing</string>
-                      </attribute>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QRadioButton" name="radio_none_smooth">
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="text">
-                       <string>None</string>
-                      </property>
-                      <property name="checked">
-                       <bool>true</bool>
-                      </property>
-                      <attribute name="buttonGroup">
-                       <string notr="true">buttonGroup_smoothing</string>
-                      </attribute>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
                  </layout>
                 </widget>
                </item>
@@ -956,8 +943,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>358</width>
-             <height>551</height>
+             <width>374</width>
+             <height>580</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1023,6 +1010,16 @@ QPlotWidget{
                    </widget>
                   </item>
                   <item>
+                   <widget class="QRadioButton" name="radio_laplace">
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="text">
+                     <string>Laplace</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <widget class="QRadioButton" name="radio_none_edges">
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
@@ -1056,64 +1053,10 @@ QPlotWidget{
                   <number>2</number>
                  </property>
                  <widget class="QWidget" name="page_edges_size">
-                  <layout class="QGridLayout" name="gridLayout_11">
-                   <item row="0" column="0">
-                    <widget class="QFrame" name="frame_3">
-                     <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_12">
-                      <item>
-                       <widget class="QLabel" name="label_edges_size">
-                        <property name="text">
-                         <string>Size</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QSlider" name="slider_kernel_size">
-                        <property name="cursor">
-                         <cursorShape>OpenHandCursor</cursorShape>
-                        </property>
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <spacer name="verticalSpacer">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>226</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
+                  <layout class="QGridLayout" name="gridLayout_11"/>
                  </widget>
                  <widget class="QWidget" name="page_edges_empty">
-                  <layout class="QGridLayout" name="gridLayout_12">
-                   <item row="0" column="0">
-                    <widget class="QWidget" name="widget_2" native="true">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <layout class="QGridLayout" name="gridLayout_12"/>
                  </widget>
                  <widget class="QWidget" name="page_edges_canny">
                   <layout class="QFormLayout" name="formLayout">
@@ -1184,39 +1127,57 @@ QPlotWidget{
                     </widget>
                    </item>
                    <item row="1" column="0" colspan="2">
-                    <widget class="QSlider" name="horizontalSlider_3">
+                    <widget class="QSlider" name="sigma_slider">
+                     <property name="value">
+                      <number>1</number>
+                     </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
                    <item row="3" column="0" colspan="2">
-                    <widget class="QSlider" name="horizontalSlider_4">
+                    <widget class="QSlider" name="low_threshold_slider">
+                     <property name="maximum">
+                      <number>200</number>
+                     </property>
+                     <property name="value">
+                      <number>20</number>
+                     </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
                    <item row="5" column="0" colspan="2">
-                    <widget class="QSlider" name="horizontalSlider_5">
+                    <widget class="QSlider" name="high_threshold_slider">
+                     <property name="maximum">
+                      <number>200</number>
+                     </property>
+                     <property name="value">
+                      <number>100</number>
+                     </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
                     </widget>
                    </item>
                    <item row="7" column="0" colspan="2">
-                    <widget class="QSlider" name="horizontalSlider_9">
+                    <widget class="QSlider" name="kernel_size_slider_2">
                      <property name="minimum">
                       <number>3</number>
                      </property>
                      <property name="maximum">
-                      <number>7</number>
+                      <number>11</number>
                      </property>
                      <property name="singleStep">
                       <number>2</number>
                      </property>
                      <property name="pageStep">
                       <number>2</number>
+                     </property>
+                     <property name="value">
+                      <number>3</number>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1228,6 +1189,87 @@ QPlotWidget{
                       <number>2</number>
                      </property>
                     </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                 <widget class="QWidget" name="page">
+                  <layout class="QGridLayout" name="gridLayout_18">
+                   <item row="0" column="0">
+                    <widget class="QWidget" name="wgt_ktype_2" native="true">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>50</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>100</height>
+                      </size>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout_17">
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_4">
+                        <property name="text">
+                         <string>Kernel:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <layout class="QHBoxLayout" name="horizontalLayout_18">
+                        <item>
+                         <widget class="QRadioButton" name="radio_kernal_one_2">
+                          <property name="cursor">
+                           <cursorShape>PointingHandCursor</cursorShape>
+                          </property>
+                          <property name="text">
+                           <string>1</string>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QRadioButton" name="radio_kernal_two_2">
+                          <property name="cursor">
+                           <cursorShape>PointingHandCursor</cursorShape>
+                          </property>
+                          <property name="text">
+                           <string>2</string>
+                          </property>
+                          <property name="checked">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <spacer name="verticalSpacer_2">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Maximum</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>137</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </widget>
@@ -1244,7 +1286,7 @@ QPlotWidget{
              <x>0</x>
              <y>0</y>
              <width>374</width>
-             <height>548</height>
+             <height>580</height>
             </rect>
            </property>
            <attribute name="label">
@@ -2195,7 +2237,7 @@ font-size: 18px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_3</sender>
+   <sender>sigma_slider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_sigma</receiver>
    <slot>setNum(int)</slot>
@@ -2211,7 +2253,7 @@ font-size: 18px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_4</sender>
+   <sender>low_threshold_slider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_thresholdL</receiver>
    <slot>setNum(int)</slot>
@@ -2227,7 +2269,7 @@ font-size: 18px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_5</sender>
+   <sender>high_threshold_slider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_thresholdH</receiver>
    <slot>setNum(int)</slot>
@@ -2243,7 +2285,7 @@ font-size: 18px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_9</sender>
+   <sender>kernel_size_slider_2</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_edges_ksize</receiver>
    <slot>setNum(int)</slot>
