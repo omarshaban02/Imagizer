@@ -310,7 +310,7 @@ class Filter:
 
         return laplace_result
 
-    def global_threshold(image, threshold_value=127, max_value=255):
+    def global_threshold(self, image, threshold_value=127, max_value=255):
         """
         Apply global thresholding to a grayscale image.
 
@@ -325,7 +325,7 @@ class Filter:
         thresholded = np.where(image > threshold_value, max_value, 0).astype(np.uint8)
         return thresholded
 
-    def local_threshold(image, blockSize=11, C=2, max_value=255):
+    def local_threshold(self, image, blockSize=11, C=2, max_value=255):
         """
         Apply local thresholding to a grayscale image.
 
@@ -435,9 +435,8 @@ def add_uniform_noise(image, intensity=50):
 
 class Image:
     def __init__(self, image):
-
         self._original_img = image
-        self._gray_scale_image = self.gray_scale_image(image)
+        self._gray_scale_image = None  # Initialize to None
         self._img_histogram = self.calculate_image_histogram()
         self.equalized_img, self.equalized_histo = self.equalize_image()
         self.normalized_img = self.equalize_image(normalize=True)
@@ -449,12 +448,13 @@ class Image:
 
     @property
     def gray_scale_image(self):
+        if self._gray_scale_image is None:  # Calculate grayscale image if not already calculated
+            self.calculate_gray_scale_image()
         return self._gray_scale_image
 
-    @gray_scale_image.setter
-    def gray_scale_image(self, img):
+    def calculate_gray_scale_image(self):
         # Extract the B, G, and R channels
-        b, g, r = img[:, :, 0], img[:, :, 1], img[:, :, 2]
+        b, g, r = self._original_img[:, :, 0], self._original_img[:, :, 1], self._original_img[:, :, 2]
 
         # Convert to grayscale using the formula: Y = 0.299*R + 0.587*G + 0.114*B
         gray_image = 0.299 * r + 0.587 * g + 0.114 * b

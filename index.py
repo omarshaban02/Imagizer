@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 import pyqtgraph as pg
 import cv2
-from classes import Filter, FourierTransform
+from classes import Filter, FourierTransform , Image
 from PyQt5.uic import loadUiType
 import numpy as np
 
@@ -76,6 +76,12 @@ class ImageEditor(QMainWindow, ui):
                                                                        self.edge_donor2_radioButton.isChecked(), 1))
         self.edge_donor1_radioButton.toggled.connect(self.recalc_high_low_pass_img)
         self.hybrid_threshold_slider.valueChanged.connect(self.recalc_high_low_pass_img)
+        #######################################################################################################
+        ######################################### Threshold ###################################################
+        self.radio_global.toggled.connect(self.global_thresholding)
+        self.radio_local.toggled.connect(self.local_thresholding)
+        self.slider_thresholding.valueChanged.connect(self.slider_value_changed)
+        self.slider_thresholding.setRange(1 , 255)
         #######################################################################################################
         self.set_radio_button_connections()  # Sets up handling Ui changes according to radio button selection
 
@@ -221,6 +227,71 @@ class ImageEditor(QMainWindow, ui):
         self.display_image(self.item_hybrid_out, hybrid_image)
 
     #######################################################################################################
+    ######################################### Threshold  ##################################################
+    def global_radio_toggled(self):
+        """
+        Callback function for the global thresholding radio button toggled signal.
+        """
+        if self.radio_global.isChecked():
+            self.slider_thresholding.setValue(1)  # Reset the slider to default value
+            self.slider_thresholding.valueChanged.disconnect(self.local_thresholding)
+            self.slider_thresholding.valueChanged.connect(self.global_thresholding)
+
+    def local_radio_toggled(self):
+        """
+        Callback function for the local thresholding radio button toggled signal.
+        """
+        if self.radio_local.isChecked():
+            self.slider_thresholding.setValue(1)  # Reset the slider to default value
+            self.slider_thresholding.valueChanged.disconnect(self.global_thresholding)
+            self.slider_thresholding.valueChanged.connect(self.local_thresholding)
+
+    def slider_value_changed(self):
+        """
+        Callback function for the slider value changed signal.
+        """
+        if self.radio_global.isChecked():
+            self.global_thresholding()
+        elif self.radio_local.isChecked():
+            self.local_thresholding()
+
+    def global_thresholding(self):
+        """
+        Callback function for global thresholding.
+        """
+        result = self.filter.global_threshold(self.filter.current_img , self.slider_thresholding.value())
+        self.display_image(self.item_filter_output , result) 
+
+    def local_thresholding(self):
+        """
+        Callback function for local thresholding.
+        """
+        result = self.filter.local_threshold(self.filter.current_img , round(self.slider_thresholding.value() // 10 ))
+        self.display_image(self.item_filter_output , result) 
+    
+    def plot_histogram_and_distribution_pyqtgraph(self, plot_widget, data, color_channel, plot_type):
+        # Calculate distribution data if necessary
+        if plot_type == 'distribution':
+            data = np.cumsum(data)
+
+        # Clear any existing plots
+        plot_widget.clear()
+
+        # Plot data
+        plot_widget.plot(data, pen=color_channel)
+
+        # Set labels and title
+        plot_widget.setLabel('left', 'Frequency')
+        plot_widget.setLabel('bottom', 'Intensity')
+        if plot_type == 'histogram':
+            plot_widget.setTitle(f'{color_channel.capitalize()} Channel Histogram')
+        elif plot_type == 'distribution':
+            plot_widget.setTitle(f'{color_channel.capitalize()} Channel Distribution')
+
+        # Update the plot
+        plot_widget.repaint()
+    #######################################################################################################
+    
 
     def open_image(self):
         file_dialog = QFileDialog(self)
@@ -236,6 +307,7 @@ class ImageEditor(QMainWindow, ui):
         self.loaded_image = cv2.rotate(cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB), cv2.ROTATE_90_CLOCKWISE)
         grayscale_image = cv2.cvtColor(self.loaded_image, cv2.COLOR_RGB2GRAY)
         self.filter = Filter(grayscale_image)
+        self.image_class = Image(self.loaded_image)
         self.noisy_img = grayscale_image
         self.noisy_img = grayscale_image
         self.output_img_display()
@@ -243,6 +315,21 @@ class ImageEditor(QMainWindow, ui):
                                          [self.item_filter_greyscale, self.item_histo_img_grey]):
             self.display_image(color_plot, self.loaded_image)
             self.display_image(grey_plot, grayscale_image)
+        hist_b, hist_g, hist_r, hist_gray = self.image_class.bgr_img_histograms
+        histogram_widgets = [
+            (self.wgt_histo_green, hist_b, 'green', 'histogram'),
+            (self.wgt_histo_blue, hist_g, 'blue', 'histogram'),
+            (self.wgt_histo_red, hist_r, 'red', 'histogram'),
+            (self.wgt_histo_greyscale, hist_gray, 'gray', 'histogram'),
+            (self.wgt_histo_green_dist, hist_b, 'green', 'distribution'),
+            (self.wgt_histo_blue_dist, hist_g, 'blue', 'distribution'),
+            (self.wgt_histo_red_dist, hist_r, 'red', 'distribution')
+        ]
+
+        # Iterate over the list of tuples and call the plot_histogram_and_distribution_pyqtgraph function
+        for widget, histogram_data, color, plot_type in histogram_widgets:
+            self.plot_histogram_and_distribution_pyqtgraph(widget, histogram_data, color, plot_type)
+
 
     @staticmethod
     def display_image(image_item, image):
