@@ -350,7 +350,8 @@ class Filter:
                 thresholded[i, j] = max_value if image[i, j] > threshold_value else 0
         return thresholded
 
-    def hybrid_images(self, image1_low_pass_filter, image2_high_pass_filter, low_threshold=10, low_gain=1, high_threshold=10, high_gain=1):
+    def hybrid_images(self, image1_low_pass_filter, image2_high_pass_filter, low_threshold=10, low_gain=1,
+                      high_threshold=10, high_gain=1):
         hybrid_image = image1_low_pass_filter + image2_high_pass_filter
         hybrid_image = np.real(hybrid_image)
         hybrid_image = cv2.normalize(hybrid_image, None, 0, 255, cv2.NORM_MINMAX)
@@ -430,3 +431,79 @@ def add_uniform_noise(image, intensity=50):
     noisy_image = cv2.add(image, noise)
 
     return noisy_image
+
+
+class Image:
+    def __init__(self, image):
+
+        self._original_img = image
+        self._gray_scale_image = self.gray_scale_image(image)
+        self._img_histogram = self.calculate_image_histogram()
+        self.equalized_img, self.equalized_histo = self.equalize_image()
+        self.normalized_img = self.equalize_image(normalize=True)
+        self._bgr_img_histograms = self.calculate_bgr_histogram_and_distribution()
+
+    @property
+    def original_img(self):
+        return self._original_img
+
+    @property
+    def gray_scale_image(self):
+        return self._gray_scale_image
+
+    @gray_scale_image.setter
+    def gray_scale_image(self, img):
+        # Extract the B, G, and R channels
+        b, g, r = img[:, :, 0], img[:, :, 1], img[:, :, 2]
+
+        # Convert to grayscale using the formula: Y = 0.299*R + 0.587*G + 0.114*B
+        gray_image = 0.299 * r + 0.587 * g + 0.114 * b
+
+        # Convert to uint8 data type
+        self._gray_scale_image = gray_image.astype(np.uint8)
+
+    @property
+    def bgr_img_histograms(self):
+        return self._bgr_img_histograms
+
+    def calculate_bgr_histogram_and_distribution(self):
+        # Split the image into its three color channels: B, G, and R
+        b, g, r = self.original_img[:, :, 0], self.original_img[:, :, 1], self.original_img[:, :, 2]
+
+        # Calculate histograms for each color channel
+        hist_b, _ = np.histogram(b.flatten(), bins=256, range=(0.0, 256.0))
+        hist_g, _ = np.histogram(g.flatten(), bins=256, range=(0.0, 256.0))
+        hist_r, _ = np.histogram(r.flatten(), bins=256, range=(0.0, 256.0))
+
+        # Calculate grayscale histogram
+        gray_image = np.dot(self.original_img[..., :3], [0.2989, 0.5870, 0.1140])
+        hist_gray, _ = np.histogram(gray_image.flatten(), bins=256, range=(0.0, 256.0))
+
+        return hist_b, hist_g, hist_r, hist_gray
+
+    def calculate_image_histogram(self):
+        hist, _ = np.histogram(self.original_img.flatten(), 256, (0, 256))
+        return hist
+
+    def calculate_image_histogram_cv(self):
+        hist = cv2.calcHist([self.original_img], [0], None, [256], [0, 256])
+        return hist.flatten()
+
+    def equalize_image(self, normalize=False):
+        hist, _ = np.histogram(self.original_img.flatten(), 256, (0, 256))
+        cdf = hist.cumsum()
+        cdf_normalized = cdf / cdf.max()
+        sk = np.round(cdf_normalized * 255)
+        equalized_image = sk[self.original_img]
+        equalized_hist, _ = np.histogram(equalized_image.flatten(), 256, (0, 256))
+        if normalize:
+            normalized_image = equalized_image / 255.0
+            normalized_hist, _ = np.histogram(normalized_image.flatten(), 256, (0, 256))
+            return normalized_image, normalized_hist
+        return equalized_image, equalized_hist
+
+    def equalize_image_cv(self, normalize=False):
+        equalized_image = cv2.equalizeHist(self.original_img)
+        if normalize:
+            equalized_image = equalized_image / 255.0
+        return equalized_image
