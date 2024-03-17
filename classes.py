@@ -502,7 +502,7 @@ class Image:
         equalized_hist, _ = np.histogram(equalized_image.flatten(), 256, (0, 256))
         if normalize:
             normalized_image = equalized_image / 255.0
-            normalized_hist, _ = np.histogram(normalized_image.flatten(), 256, (0, 256))
+            normalized_hist, _ = np.histogram(normalized_image.flatten(), 256, (0, 1), density=True)
             return normalized_image, normalized_hist
         return equalized_image, equalized_hist
 

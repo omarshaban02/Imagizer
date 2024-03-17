@@ -17,7 +17,7 @@ class ImageEditor(QMainWindow, ui):
         self.noisy_img = None
         self.loaded_image = None
         self.loaded_image_second = None
-        ######################################### Hybrid image ###############################################
+        # ######################################## Hybrid image # ##############################################
         self.fft_operation = FourierTransform()
         self.low_pass_img = None
         self.high_pass_img = None
@@ -25,7 +25,7 @@ class ImageEditor(QMainWindow, ui):
         self.images_fft_list = []
 
         self.img_obj = None
-        #######################################################################################################
+        # #####################################################################################################
 
         self.plotwidget_set = [self.wgt_input_img, self.wgt_input_img_greyscale, self.wgt_output_img,
                                self.wgt_histo_red_dist, self.wgt_histo_blue_dist, self.wgt_histo_green_dist,
@@ -42,15 +42,16 @@ class ImageEditor(QMainWindow, ui):
                                self.item_histo_img_colored, self.item_histo_img_grey,
                                self.item_histo_curve, self.item_hybrid_1, self.item_hybrid_2, self.item_hybrid_out,
                                self.item_hybrid_FT_1, self.item_hybrid_FT_2,
-                               self.item_histo_red, self.item_histo_blue, self.item_histo_green,
-                               self.item_histo_histogram,
-                               ] = [pg.ImageItem() for _ in range(18)]  # + [pg.HistogramLUTItem for _ in range(4)]
+                               # self.item_histo_red, self.item_histo_blue, self.item_histo_green,
+                               # self.item_histo_histogram,
+                               ] = [pg.ImageItem() for _ in range(14)]  # + [pg.HistogramLUTItem for _ in range(4)]
 
         self.hist_widget_set = [self.wgt_histo_red, self.wgt_histo_blue, self.wgt_histo_green,
                                 self.wgt_histo_histogram]
         self.hist_item_set = [
-            self.hitem_histo_red, self.hitem_histo_blue, self.hitem_histo_green, self.hitem_histo_histogram
-        ] = [pg.HistogramLUTItem for _ in range(4)]
+            self.item_histo_red, self.item_histo_blue, self.item_histo_green, self.item_histo_histogram
+        ] = [pg.BarGraphItem(x=[0 for _ in range(10)], height=[0 for _ in range(10)], width=0.5, brush='w') for _ in
+             range(4)]
 
         self.setup_plotwidgets()
 
@@ -79,20 +80,20 @@ class ImageEditor(QMainWindow, ui):
         self.sigma_slider.valueChanged.connect(self.output_img_display)
         self.low_threshold_slider.valueChanged.connect(self.output_img_display)
         self.high_threshold_slider.valueChanged.connect(self.output_img_display)
-        ######################################### Hybrid image ###############################################
+        # ######################################## Hybrid image # ##############################################
         self.btn_browse_1.clicked.connect(lambda: self.open_hybrid_img(self.item_hybrid_1,
                                                                        not self.edge_donor2_radioButton.isChecked(), 0))
         self.btn_browse_2.clicked.connect(lambda: self.open_hybrid_img(self.item_hybrid_2,
                                                                        self.edge_donor2_radioButton.isChecked(), 1))
         self.edge_donor1_radioButton.toggled.connect(self.recalc_high_low_pass_img)
         self.hybrid_threshold_slider.valueChanged.connect(self.recalc_high_low_pass_img)
-        #######################################################################################################
-        ######################################### Threshold ###################################################
+        # #####################################################################################################
+        # ######################################## Threshold # ##################################################
         self.radio_global.toggled.connect(self.global_thresholding)
         self.radio_local.toggled.connect(self.local_thresholding)
         self.slider_thresholding.valueChanged.connect(self.slider_value_changed)
         self.slider_thresholding.setRange(1, 255)
-        #######################################################################################################
+        # #####################################################################################################
         self.set_radio_button_connections()  # Sets up handling Ui changes according to radio button selection
 
         self.hide_stuff_at_startup()
@@ -110,23 +111,35 @@ class ImageEditor(QMainWindow, ui):
             self.display_image(self.item_histo_img_grey, self.img_obj.calculate_gray_scale_image(
                 self.img_obj.equalized_img))
             if self.normalize_check_box.isChecked():
-                self.plot_histogram_and_distribution_pyqtgraph(self.wgt_histo_histogram, self.img_obj.normalized_hist,
-                                                               "white", "histogram")
+                self.display_hist(self.wgt_histo_histogram, self.item_histo_histogram, self.img_obj.normalized_hist)
                 self.plot_histogram_and_distribution_pyqtgraph(self.wgt_histo_curve, self.img_obj.normalized_hist,
                                                                "white", "distribution")
             else:
-                self.plot_histogram_and_distribution_pyqtgraph(self.wgt_histo_histogram, self.img_obj.equalized_hist,
-                                                               "white", "histogram")
+                self.display_hist(self.wgt_histo_histogram, self.item_histo_histogram, self.img_obj.equalized_hist)
                 self.plot_histogram_and_distribution_pyqtgraph(self.wgt_histo_curve, self.img_obj.equalized_hist,
                                                                "white", "distribution")
         elif not self.equalize_check_box.isChecked():
             self.display_image(self.item_histo_img_colored, self.img_obj.original_img)
             self.display_image(self.item_histo_img_grey, self.img_obj.gray_scale_image)
-            self.plot_histogram_and_distribution_pyqtgraph(self.wgt_histo_histogram, self.img_obj.img_histogram,
-                                                           "white", "histogram")
+            self.display_hist(self.wgt_histo_histogram, self.item_histo_histogram, self.img_obj.img_histogram)
             self.plot_histogram_and_distribution_pyqtgraph(self.wgt_histo_curve, self.img_obj.img_histogram,
                                                            "white", "distribution")
             self.normalize_check_box.setEnabled(False)
+
+    @staticmethod
+    def display_hist(plot_widget, item, hist, brush="w"):
+        plot_widget.clear()
+
+        item.setOpts(x=range(256), height=hist, brush=brush, pen=brush)
+        plot_widget.addItem(item)
+
+        # Set labels and title
+        plot_widget.setLabel('left', 'Frequency')
+        plot_widget.setLabel('bottom', 'Intensity')
+        plot_widget.setTitle('Main Histogram')
+
+        # Update the plot
+        plot_widget.repaint()
 
     def output_img_display(self):
         """
@@ -212,7 +225,7 @@ class ImageEditor(QMainWindow, ui):
             # No image loaded, display a warning message
             QMessageBox.warning(self, "No Image Loaded", "Please load an image first")
 
-    ######################################### Hybrid image ###############################################
+    # ######################################## Hybrid image # ##############################################
     def open_hybrid_img(self, plot_widget, state, img_num):
         file_dialog = QFileDialog(self)
         file_dialog.setNameFilter("Images (*.png *.jpg *.bmp *.tif *.jpeg)")
@@ -264,8 +277,8 @@ class ImageEditor(QMainWindow, ui):
         hybrid_image = self.filter.hybrid_images(self.hybrid_images_list[-1], self.hybrid_images_list[-2])
         self.display_image(self.item_hybrid_out, hybrid_image)
 
-    #######################################################################################################
-    ######################################### Threshold  ##################################################
+    # #####################################################################################################
+    # ######################################## Threshold  # #################################################
     def global_radio_toggled(self):
         """
         Callback function for the global thresholding radio button toggled signal.
@@ -307,7 +320,8 @@ class ImageEditor(QMainWindow, ui):
         result = self.filter.local_threshold(self.filter.current_img, round(self.slider_thresholding.value() // 10))
         self.display_image(self.item_filter_output, result)
 
-    def plot_histogram_and_distribution_pyqtgraph(self, plot_widget, data, color_channel, plot_type):
+    @staticmethod
+    def plot_histogram_and_distribution_pyqtgraph(plot_widget, data, color_channel, plot_type):
         # Calculate distribution data if necessary
         if plot_type == 'distribution':
             data = np.cumsum(data)
@@ -329,7 +343,7 @@ class ImageEditor(QMainWindow, ui):
         # Update the plot
         plot_widget.repaint()
 
-    #######################################################################################################
+    # #####################################################################################################
 
     def open_image(self):
         file_dialog = QFileDialog(self)
@@ -354,21 +368,31 @@ class ImageEditor(QMainWindow, ui):
             self.display_image(color_plot, self.loaded_image)
             self.display_image(grey_plot, grayscale_image)
         hist_b, hist_g, hist_r, hist_gray = self.img_obj.bgr_img_histograms
-        histogram_widgets = [
-            (self.wgt_histo_green, hist_b, 'green', 'histogram'),
-            (self.wgt_histo_blue, hist_g, 'blue', 'histogram'),
-            (self.wgt_histo_red, hist_r, 'red', 'histogram'),
+        dist_widgets = [
+            # (self.wgt_histo_green, hist_b, 'green', 'histogram'),
+            # (self.wgt_histo_blue, hist_g, 'blue', 'histogram'),
+            # (self.wgt_histo_red, hist_r, 'red', 'histogram'),
             # (self.wgt_histo_img_greyscale, hist_gray, 'gray', 'histogram'),
             (self.wgt_histo_green_dist, hist_b, 'green', 'distribution'),
             (self.wgt_histo_blue_dist, hist_g, 'blue', 'distribution'),
             (self.wgt_histo_red_dist, hist_r, 'red', 'distribution'),
-            (self.wgt_histo_histogram, self.img_obj.img_histogram, "white", "histogram"),
+            # (self.wgt_histo_histogram, self.img_obj.img_histogram, "white", "histogram"),
             (self.wgt_histo_curve, self.img_obj.img_histogram, "white", "distribution")
         ]
 
+        histogram_widgets = [
+            (self.wgt_histo_green, self.item_histo_green, hist_g, "g"),
+            (self.wgt_histo_blue, self.item_histo_blue, hist_b, "b"),
+            (self.wgt_histo_red, self.item_histo_red, hist_r, "r"),
+            (self.wgt_histo_histogram, self.item_histo_histogram, self.img_obj.img_histogram, "w")
+        ]
+
         # Iterate over the list of tuples and call the plot_histogram_and_distribution_pyqtgraph function
-        for widget, histogram_data, color, plot_type in histogram_widgets:
+        for widget, histogram_data, color, plot_type in dist_widgets:
             self.plot_histogram_and_distribution_pyqtgraph(widget, histogram_data, color, plot_type)
+
+        for widget, item, histogram_data, brush in histogram_widgets:
+            self.display_hist(widget, item, histogram_data, brush)
 
     @staticmethod
     def display_image(image_item, image):
@@ -398,11 +422,8 @@ class ImageEditor(QMainWindow, ui):
             plotwidget.addItem(imgItem)
             print(f"{imgItem} added to {plotwidget.objectName()} ")
 
-        # for hist_item, img_item in zip(self.hist_item_set, self.image_item_set[-4:]):
-        #     hist_item.setImageItem(img_item)
-
-        # for hist_wgt, hist_item in zip(self.hist_widget_set, self.hist_item_set):
-        #     hist_wgt.addItem(hist_item)
+        for hist_wgt, hist_item in zip(self.hist_widget_set, self.hist_item_set):
+            hist_wgt.addItem(hist_item)
 
     # Sets the page of the stacked widget based on the radio button selected
     def set_stacked_widget(self, stacked_widget, radio_dict):
