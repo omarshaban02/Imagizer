@@ -417,21 +417,16 @@ class ImageEditor(QMainWindow, ui):
         image_item.getViewBox().autoRange()
         
     def apply_noise(self):
-        if self.noisy_img is not None:
-            original_greyscale = self.img_obj.gray_scale_image
-            
-            if self.radio_uniform.isChecked():
-                self.noisy_img = add_uniform_noise(original_greyscale, self.slider_intensity.value())
-            elif self.radio_gaus.isChecked():
-                self.noisy_img = add_gaussian_noise(original_greyscale, self.slider_mean.value(), self.slider_std.value())
-            elif self.radio_sp.isChecked():
-                self.noisy_img = add_salt_and_pepper_noise(original_greyscale, self.slider_salt.value()/100, self.slider_pepper.value()/100)
-            else:
-                self.noisy_img = original_greyscale
+        
+        if self.radio_uniform.isChecked():
+            self.noisy_img = add_uniform_noise(self.loaded_image, self.slider_intensity.value())
+        elif self.radio_gaus.isChecked():
+            self.noisy_img = add_gaussian_noise(self.loaded_image, self.slider_mean.value(), self.slider_std.value())
+        elif self.radio_sp.isChecked():
+            self.noisy_img = add_salt_and_pepper_noise(self.loaded_image, self.slider_salt.value(), self.slider_pepper.value())
         
         
-        # self.display_image(self.item_filter_output, self.noisy_img)
-        self.output_img_display()
+        self.display_image(self.item_filter_output, self.noisy_img)
         
     
 
@@ -498,7 +493,6 @@ class ImageEditor(QMainWindow, ui):
         # Connect noise radio buttons to function that sets visible sliders according to selection
         for noise_radio in self.radio_dict_noise.keys():
             noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget, self.radio_dict_noise))
-            noise_radio.toggled.connect(self.output_img_display)
 
         # Connect edges radio buttons to function that sets visible sliders according to selection
         for edge_radio in self.radio_dict_edges.keys():

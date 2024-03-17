@@ -295,7 +295,7 @@ QPlotWidget{
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -359,7 +359,7 @@ QPlotWidget{
            <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="tabSpacing">
            <number>7</number>
@@ -369,8 +369,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>303</width>
-             <height>498</height>
+             <width>374</width>
+             <height>606</height>
             </rect>
            </property>
            <attribute name="label">
@@ -944,8 +944,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>219</width>
-             <height>461</height>
+             <width>374</width>
+             <height>606</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1286,8 +1286,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>141</width>
-             <height>129</height>
+             <width>374</width>
+             <height>606</height>
             </rect>
            </property>
            <attribute name="label">
@@ -2004,6 +2004,7 @@ font-size: 18px;</string>
                   <font>
                    <family>Ubuntu</family>
                    <pointsize>-1</pointsize>
+                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -2135,7 +2136,7 @@ font-size: 18px;</string>
      <x>0</x>
      <y>0</y>
      <width>1159</width>
-     <height>29</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2346,8 +2347,8 @@ font-size: 18px;</string>
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="buttonGroup_smoothing"/>
   <buttongroup name="buttonGroup_noise"/>
   <buttongroup name="buttonGroup_edges"/>
-  <buttongroup name="buttonGroup_smoothing"/>
  </buttongroups>
 </ui>

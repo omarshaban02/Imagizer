@@ -434,20 +434,19 @@ def add_uniform_noise(image, intensity=50):
 
 
 
-def add_gaussian_noise(image, mean = 0.0, std = 25.0):
-    """Add gaussian noise to an image.
+def add_gaussian_noise(image, intensity=50):
+    """Add uniform noise to an image.
 
     Args:
         image (numpy.ndarry): Input image.
-        mean (float): Mean value for Gaussian noise.
-        std (float): Standard deviation value for Gaussian noise.
+        intensity (int): Intensity of uniform noise.
 
     Returns:
         noisy_image (numpy.ndarray): The image after applying noise modifier.
 
     """
 
-    noise = np.random.normal(mean, std, image.shape).astype('uint8')
+    noise = np.random.uniform(-intensity, intensity, image.shape).astype('uint8')
     noisy_image = cv2.add(image, noise)
 
     return noisy_image

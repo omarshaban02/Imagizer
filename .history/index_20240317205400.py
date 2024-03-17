@@ -430,8 +430,7 @@ class ImageEditor(QMainWindow, ui):
                 self.noisy_img = original_greyscale
         
         
-        # self.display_image(self.item_filter_output, self.noisy_img)
-        self.output_img_display()
+        self.display_image(self.item_filter_output, self.noisy_img)
         
     
 

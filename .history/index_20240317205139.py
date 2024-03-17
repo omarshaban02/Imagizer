@@ -430,8 +430,7 @@ class ImageEditor(QMainWindow, ui):
                 self.noisy_img = original_greyscale
         
         
-        # self.display_image(self.item_filter_output, self.noisy_img)
-        self.output_img_display()
+        self.display_image(self.item_filter_output, self.noisy_img)
         
     
 
@@ -498,7 +497,7 @@ class ImageEditor(QMainWindow, ui):
         # Connect noise radio buttons to function that sets visible sliders according to selection
         for noise_radio in self.radio_dict_noise.keys():
             noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget, self.radio_dict_noise))
-            noise_radio.toggled.connect(self.output_img_display)
+            noise_radio.toggled.connect(self.apply_noise)
 
         # Connect edges radio buttons to function that sets visible sliders according to selection
         for edge_radio in self.radio_dict_edges.keys():
