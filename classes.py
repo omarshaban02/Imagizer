@@ -433,13 +433,15 @@ def add_uniform_noise(image, intensity=50):
     return noisy_image
 
 
+
+
 class Image:
     def __init__(self, image):
         self._original_img = image
-        self._gray_scale_image = None  # Initialize to None
+        self._gray_scale_image = self.calculate_gray_scale_image(self.original_img)
         self._img_histogram = self.calculate_image_histogram()
-        self.equalized_img, self.equalized_histo = self.equalize_image()
-        self.normalized_img = self.equalize_image(normalize=True)
+        self.equalized_img, self.equalized_hist = self.equalize_image()
+        self.normalized_img, self.normalized_hist = self.equalize_image(normalize=True)
         self._bgr_img_histograms = self.calculate_bgr_histogram_and_distribution()
 
     @property
@@ -448,23 +450,25 @@ class Image:
 
     @property
     def gray_scale_image(self):
-        if self._gray_scale_image is None:  # Calculate grayscale image if not already calculated
-            self.calculate_gray_scale_image()
         return self._gray_scale_image
 
-    def calculate_gray_scale_image(self):
+    @property
+    def bgr_img_histograms(self):
+        return self._bgr_img_histograms
+
+    @property
+    def img_histogram(self):
+        return self._img_histogram
+
+    def calculate_gray_scale_image(self, img):
         # Extract the B, G, and R channels
-        b, g, r = self._original_img[:, :, 0], self._original_img[:, :, 1], self._original_img[:, :, 2]
+        b, g, r = img[:, :, 0], img[:, :, 1], img[:, :, 2]
 
         # Convert to grayscale using the formula: Y = 0.299*R + 0.587*G + 0.114*B
         gray_image = 0.299 * r + 0.587 * g + 0.114 * b
 
         # Convert to uint8 data type
-        self._gray_scale_image = gray_image.astype(np.uint8)
-
-    @property
-    def bgr_img_histograms(self):
-        return self._bgr_img_histograms
+        return gray_image.astype(np.uint8)
 
     def calculate_bgr_histogram_and_distribution(self):
         # Split the image into its three color channels: B, G, and R
