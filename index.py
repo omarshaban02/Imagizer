@@ -445,7 +445,7 @@ class ImageEditor(QMainWindow, ui):
                 plotwidget.showAxis('left', False)
                 plotwidget.showAxis('bottom', False)
                 plotwidget.setBackground((25, 30, 40))
-                plotwidget.setStyleSheet("border: 2px solid white; border-radius:6px;")
+                plotwidget.setStyleSheet("border: 2px solid #176B87; border-radius:5px;")
                 plotitem = plotwidget.getPlotItem()
                 plotitem.getViewBox().setDefaultPadding(0)
 

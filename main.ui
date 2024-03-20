@@ -263,7 +263,25 @@ QTabBar::tab:selected {
 	border-bottom: 3px solid white;
 }
 QPlotWidget{
- background-color:(25, 35, 45, 0.8)
+ 	background-color:(25, 35, 45, 0.8)
+}
+/*----------------------------------------------------------------------------------------*/
+
+QToolBox::tab {
+background-color: #455364;
+margin:-2px;
+padding: 0px 5px;
+color: #E0E1E3;
+border: 3px solid #19232D;
+border-radius: 10px;
+ }
+
+QToolBox::tab:selected {
+background-color: rgba(69,83,100,60%);
+color:  white;
+margin: 0px;
+padding:0px 20px;
+border:2px solid white;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -944,8 +962,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>374</width>
-             <height>606</height>
+             <width>242</width>
+             <height>514</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1286,8 +1304,8 @@ QPlotWidget{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>374</width>
-             <height>606</height>
+             <width>153</width>
+             <height>143</height>
             </rect>
            </property>
            <attribute name="label">
@@ -2347,8 +2365,8 @@ font-size: 18px;</string>
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup_smoothing"/>
   <buttongroup name="buttonGroup_noise"/>
+  <buttongroup name="buttonGroup_smoothing"/>
   <buttongroup name="buttonGroup_edges"/>
  </buttongroups>
 </ui>
