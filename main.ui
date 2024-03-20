@@ -377,7 +377,7 @@ border:2px solid white;
            <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="tabSpacing">
            <number>7</number>
@@ -962,8 +962,8 @@ border:2px solid white;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>242</width>
-             <height>514</height>
+             <width>374</width>
+             <height>606</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1304,8 +1304,8 @@ border:2px solid white;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>153</width>
-             <height>143</height>
+             <width>374</width>
+             <height>606</height>
             </rect>
            </property>
            <attribute name="label">
@@ -2365,8 +2365,8 @@ font-size: 18px;</string>
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup_noise"/>
   <buttongroup name="buttonGroup_smoothing"/>
   <buttongroup name="buttonGroup_edges"/>
+  <buttongroup name="buttonGroup_noise"/>
  </buttongroups>
 </ui>

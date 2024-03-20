@@ -1,6 +1,5 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
-from mainui import Ui_MainWindow
 import pyqtgraph as pg
 import cv2
 from classes import Filter, FourierTransform, Image, add_gaussian_noise, add_salt_and_pepper_noise, add_uniform_noise
@@ -76,6 +75,7 @@ class ImageEditor(QMainWindow, ui):
 
         # connect buttons
         self.kernel_size_slider.valueChanged.connect(self.output_img_display)
+        self.kernel_size_slider_2.valueChanged.connect(self.output_img_display)
         self.radio_kernal_one.toggled.connect(self.output_img_display)
         self.radio_kernal_two.toggled.connect(self.output_img_display)
         self.sigma_slider.valueChanged.connect(self.output_img_display)
@@ -222,7 +222,7 @@ class ImageEditor(QMainWindow, ui):
                     sigma = self.sigma_slider.value()
                     low_threshold = self.low_threshold_slider.value()
                     high_threshold = self.high_threshold_slider.value()
-                    kernel_size = self.kernel_size_slider.value()
+                    kernel_size = self.kernel_size_slider_2.value()
 
                     if (not np.any(self.filter.current_img != self.noisy_img) and
                             sigma == self.filter.canny_sigma and
@@ -451,6 +451,7 @@ class ImageEditor(QMainWindow, ui):
                 plotwidget.showAxis('left', False)
                 plotwidget.showAxis('bottom', False)
                 plotwidget.setBackground((25, 30, 40))
+                plotwidget.setStyleSheet("border: 2px solid #176B87; border-radius:5px;")
                 plotitem = plotwidget.getPlotItem()
                 plotitem.getViewBox().setDefaultPadding(0)
 

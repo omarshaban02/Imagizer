@@ -7,13 +7,15 @@ Imagizer is a desktop application built using PyQt to perform various image proc
 ### 1. Additive Noise
    - Uniform Noise
    - Gaussian Noise
-   - Salt and Pepper Noise
+   - Salt and Pepper Noise 
 
 
 ### 2. Filtering
    - Average Filter
    - Gaussian Filter
    - Median Filter
+
+   ![Noise and smoothing](assets/gifs/Noise_smooth.gif)
 
 ### 3. Edge Detection
    - Sobel Operator
@@ -22,17 +24,25 @@ Imagizer is a desktop application built using PyQt to perform various image proc
    - Laplace Operator
    - Canny Edge Detector
 
+   ![Edge Detection](assets/gifs/edges.gif)
+
 ### 4. Histogram Analysis
    - Histogram Plotting
    - Distribution Curve Plotting
+
 
 ### 5. Equalization
 
 ### 6. Normalization
 
+   ![Histogram Analysis](assets/gifs/Histograms.gif)
+
+
 ### 7. Thresholding
    - Local Thresholding
    - Global Thresholding
+
+   ![Thresholding](assets/gifs/Thresholding.gif)
 
 ### 8. Color to Grayscale Conversion
    - Plotting R, G, and B histograms
@@ -43,6 +53,8 @@ Imagizer is a desktop application built using PyQt to perform various image proc
    - Low Pass Filters
 
 ### 10. Hybrid Images
+
+   ![Hybrid Images](assets/gifs/Hybrid_image.gif)
 
 
 ## Requirements
