@@ -82,20 +82,20 @@ class ImageEditor(QMainWindow, ui):
         self.low_threshold_slider.valueChanged.connect(self.output_img_display)
         self.high_threshold_slider.valueChanged.connect(self.output_img_display)
         # ######################################## Noise sliders # ##############################################
-        
+
         # Uniform
         self.slider_intensity.valueChanged.connect(self.apply_noise)
-        
+
         # Gaussian
         self.slider_mean.valueChanged.connect(self.apply_noise)
         self.slider_std.valueChanged.connect(self.apply_noise)
-        
+
         # Salt and Pepper
         self.slider_salt.valueChanged.connect(self.apply_noise)
         self.slider_pepper.valueChanged.connect(self.apply_noise)
-        
+
         # #####################################################################################################
-        
+
         # ######################################## Hybrid image # ##############################################
         self.btn_browse_1.clicked.connect(lambda: self.open_hybrid_img(self.item_hybrid_1,
                                                                        not self.edge_donor2_radioButton.isChecked(), 0))
@@ -104,7 +104,7 @@ class ImageEditor(QMainWindow, ui):
         self.edge_donor1_radioButton.toggled.connect(self.recalc_high_low_pass_img)
         self.hybrid_threshold_slider.valueChanged.connect(self.recalc_high_low_pass_img)
         # #####################################################################################################
-       
+
         # ######################################## Threshold # ##################################################
         self.radio_global.toggled.connect(self.global_thresholding)
         self.radio_local.toggled.connect(self.local_thresholding)
@@ -167,77 +167,85 @@ class ImageEditor(QMainWindow, ui):
 
         If no image is loaded, a warning message is displayed.
         """
+
         if self.loaded_image is not None:
-            # Average filter
-            if self.radio_average.isChecked():
-                if (np.any(self.filter.current_img != self.noisy_img) or
-                        self.filter.current_ksize != self.kernel_size_slider.value()):
-                    self.filter.average(self.noisy_img, self.kernel_size_slider.value())
-                self.display_image(self.item_filter_output, self.filter.img_average)
+            if self.toolBox.currentIndex() == 0:
+                # Average filter
+                if self.radio_average.isChecked():
+                    if (np.any(self.filter.current_img != self.noisy_img) or
+                            self.filter.current_ksize != self.kernel_size_slider.value()):
+                        self.filter.average(self.noisy_img, self.kernel_size_slider.value())
+                    self.display_image(self.item_filter_output, self.filter.img_average)
 
-            # Median filter
-            elif self.radio_median.isChecked():
-                if (np.any(self.filter.current_img != self.noisy_img) or
-                        self.filter.current_ksize != self.kernel_size_slider.value()):
-                    self.filter.median_scipy(self.noisy_img, self.kernel_size_slider.value())
-                self.display_image(self.item_filter_output, self.filter.img_median)
+                # Median filter
+                elif self.radio_median.isChecked():
+                    if (np.any(self.filter.current_img != self.noisy_img) or
+                            self.filter.current_ksize != self.kernel_size_slider.value()):
+                        self.filter.median_scipy(self.noisy_img, self.kernel_size_slider.value())
+                    self.display_image(self.item_filter_output, self.filter.img_median)
 
-            # Gaussian smoothing
-            elif self.radio_gauss_smooth.isChecked():
-                kernel_number_checked = 1 if self.radio_kernal_one.isChecked() else 2
-                if np.any(self.filter.current_img != self.noisy_img) or (
-                        self.filter.gaussian_kernel_number != kernel_number_checked):
-                    print(kernel_number_checked)
-                    self.filter.gaussian(self.noisy_img, kernel_number_checked)
-                self.display_image(self.item_filter_output, self.filter.img_gaussian)
+                # Gaussian smoothing
+                elif self.radio_gauss_smooth.isChecked():
+                    kernel_number_checked = 1 if self.radio_kernal_one.isChecked() else 2
+                    if np.any(self.filter.current_img != self.noisy_img) or (
+                            self.filter.gaussian_kernel_number != kernel_number_checked):
+                        print(kernel_number_checked)
+                        self.filter.gaussian(self.noisy_img, kernel_number_checked)
+                    self.display_image(self.item_filter_output, self.filter.img_gaussian)
 
-            # Edge Detection
-            # Sobel filter
-            elif self.radio_sobel.isChecked():
-                if np.any(self.filter.current_img != self.noisy_img):
-                    self.filter.sobel(self.noisy_img)
-                self.display_image(self.item_filter_output, self.filter.img_sobel)
-
-            # Roberts filter
-            elif self.radio_roberts.isChecked():
-                if np.any(self.filter.current_img != self.noisy_img):
-                    self.filter.roberts(self.noisy_img)
-                self.display_image(self.item_filter_output, self.filter.img_roberts)
-
-            # Prewitt filter
-            elif self.radio_prewitt.isChecked():
-                if np.any(self.filter.current_img != self.noisy_img):
-                    self.filter.prewitt(self.noisy_img)
-                self.display_image(self.item_filter_output, self.filter.img_prewitt)
-
-            # Canny edge detection
-            elif self.radio_canny.isChecked():
-                sigma = self.sigma_slider.value()
-                low_threshold = self.low_threshold_slider.value()
-                high_threshold = self.high_threshold_slider.value()
-                kernel_size = self.kernel_size_slider.value()
-
-                if (not np.any(self.filter.current_img != self.noisy_img) and
-                        sigma == self.filter.canny_sigma and
-                        low_threshold == self.filter.canny_low_threshold and
-                        high_threshold == self.filter.canny_high_threshold and
-                        kernel_size == self.filter.canny_kernel_size):
-                    pass
                 else:
-                    self.filter.canny(self.noisy_img, sigma, low_threshold, high_threshold, kernel_size)
-                self.display_image(self.item_filter_output, self.filter.img_canny)
+                    self.display_image(self.item_filter_output, self.noisy_img)
+                self.display_image(self.item_filter_greyscale, self.noisy_img)
 
-            # Laplace filter
-            elif self.radio_laplace.isChecked():
-                kernel_number_checked = 1 if self.radio_kernal_one.isChecked() else 2
-                if np.any(self.filter.current_img != self.noisy_img) or (
-                        self.filter.laplace_kernel_number != kernel_number_checked):
-                    self.filter.laplace(self.noisy_img, kernel_number_checked)
-                self.display_image(self.item_filter_output, self.filter.img_laplace)
+            elif self.toolBox.currentIndex() == 1:
+                # Edge Detection
+                # Sobel filter
+                if self.radio_sobel.isChecked():
+                    if np.any(self.filter.current_img != self.noisy_img):
+                        self.filter.sobel(self.noisy_img)
+                    self.display_image(self.item_filter_output, self.filter.img_sobel)
 
-            # No filter selected, display the original image
-            else:
-                self.display_image(self.item_filter_output, self.noisy_img)
+                # Roberts filter
+                elif self.radio_roberts.isChecked():
+                    if np.any(self.filter.current_img != self.noisy_img):
+                        self.filter.roberts(self.noisy_img)
+                    self.display_image(self.item_filter_output, self.filter.img_roberts)
+
+                # Prewitt filter
+                elif self.radio_prewitt.isChecked():
+                    if np.any(self.filter.current_img != self.noisy_img):
+                        self.filter.prewitt(self.noisy_img)
+                    self.display_image(self.item_filter_output, self.filter.img_prewitt)
+
+                # Canny edge detection
+                elif self.radio_canny.isChecked():
+                    sigma = self.sigma_slider.value()
+                    low_threshold = self.low_threshold_slider.value()
+                    high_threshold = self.high_threshold_slider.value()
+                    kernel_size = self.kernel_size_slider.value()
+
+                    if (not np.any(self.filter.current_img != self.noisy_img) and
+                            sigma == self.filter.canny_sigma and
+                            low_threshold == self.filter.canny_low_threshold and
+                            high_threshold == self.filter.canny_high_threshold and
+                            kernel_size == self.filter.canny_kernel_size):
+                        pass
+                    else:
+                        self.filter.canny(self.noisy_img, sigma, low_threshold, high_threshold, kernel_size)
+                    self.display_image(self.item_filter_output, self.filter.img_canny)
+
+                # Laplace filter
+                elif self.radio_laplace.isChecked():
+                    kernel_number_checked = 1 if self.radio_kernal_one.isChecked() else 2
+                    if np.any(self.filter.current_img != self.noisy_img) or (
+                            self.filter.laplace_kernel_number != kernel_number_checked):
+                        self.filter.laplace(self.noisy_img, kernel_number_checked)
+                    self.display_image(self.item_filter_output, self.filter.img_laplace)
+
+                # No filter selected, display the original image
+                else:
+                    self.display_image(self.item_filter_output, self.noisy_img)
+                self.display_image(self.item_filter_greyscale, self.noisy_img)
         else:
             # No image loaded, display a warning message
             QMessageBox.warning(self, "No Image Loaded", "Please load an image first")
@@ -254,6 +262,7 @@ class ImageEditor(QMainWindow, ui):
                                            cv2.ROTATE_90_CLOCKWISE)
             greyscale_image = cv2.cvtColor(self.loaded_image, cv2.COLOR_RGB2GRAY)
             greyscale_image = cv2.resize(greyscale_image, (361, 410))
+
             self.display_image(plot_widget, greyscale_image)
             image_fft = self.fft_operation.get_img_fft(greyscale_image)
             self.images_fft_list.insert(img_num, image_fft)
@@ -378,12 +387,11 @@ class ImageEditor(QMainWindow, ui):
         self.filter = Filter(grayscale_image)
         self.img_obj = Image(self.loaded_image)
         self.noisy_img = grayscale_image
-        self.noisy_img = grayscale_image
         self.output_img_display()
         for color_plot, grey_plot in zip([self.item_filter_input, self.item_histo_img_colored],
                                          [self.item_filter_greyscale, self.item_histo_img_grey]):
             self.display_image(color_plot, self.loaded_image)
-            self.display_image(grey_plot, grayscale_image)
+            self.display_image(grey_plot, self.noisy_img)
         hist_b, hist_g, hist_r, hist_gray = self.img_obj.bgr_img_histograms
         dist_widgets = [
             # (self.wgt_histo_green, hist_b, 'green', 'histogram'),
@@ -415,25 +423,23 @@ class ImageEditor(QMainWindow, ui):
     def display_image(image_item, image):
         image_item.setImage(image)
         image_item.getViewBox().autoRange()
-        
+
     def apply_noise(self):
         if self.noisy_img is not None:
-            original_greyscale = self.img_obj.gray_scale_image
-            
+            greyscale_image = self.img_obj.gray_scale_image
             if self.radio_uniform.isChecked():
-                self.noisy_img = add_uniform_noise(original_greyscale, self.slider_intensity.value())
+                self.noisy_img = add_uniform_noise(greyscale_image, self.slider_intensity.value())
             elif self.radio_gaus.isChecked():
-                self.noisy_img = add_gaussian_noise(original_greyscale, self.slider_mean.value(), self.slider_std.value())
+                self.noisy_img = add_gaussian_noise(greyscale_image, self.slider_mean.value(),
+                                                    self.slider_std.value())
             elif self.radio_sp.isChecked():
-                self.noisy_img = add_salt_and_pepper_noise(original_greyscale, self.slider_salt.value()/100, self.slider_pepper.value()/100)
+                self.noisy_img = add_salt_and_pepper_noise(greyscale_image, self.slider_salt.value() / 100,
+                                                           self.slider_pepper.value() / 100)
             else:
-                self.noisy_img = original_greyscale
-        
-        
-        # self.display_image(self.item_filter_output, self.noisy_img)
+                self.noisy_img = greyscale_image
+
         self.output_img_display()
-        
-    
+        self.display_image(self.item_filter_greyscale, self.noisy_img)
 
     # ############################### Misc Functions ################################
 
@@ -445,7 +451,6 @@ class ImageEditor(QMainWindow, ui):
                 plotwidget.showAxis('left', False)
                 plotwidget.showAxis('bottom', False)
                 plotwidget.setBackground((25, 30, 40))
-                plotwidget.setStyleSheet("border: 2px solid #176B87; border-radius:5px;")
                 plotitem = plotwidget.getPlotItem()
                 plotitem.getViewBox().setDefaultPadding(0)
 
@@ -499,6 +504,7 @@ class ImageEditor(QMainWindow, ui):
         # Connect noise radio buttons to function that sets visible sliders according to selection
         for noise_radio in self.radio_dict_noise.keys():
             noise_radio.toggled.connect(lambda: self.set_stacked_widget(self.stackedWidget, self.radio_dict_noise))
+            noise_radio.toggled.connect(self.apply_noise)
             noise_radio.toggled.connect(self.output_img_display)
 
         # Connect edges radio buttons to function that sets visible sliders according to selection
