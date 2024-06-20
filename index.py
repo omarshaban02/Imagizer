@@ -2,7 +2,10 @@ import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 import pyqtgraph as pg
 import cv2
-from classes import Filter, FourierTransform, Image, add_gaussian_noise, add_salt_and_pepper_noise, add_uniform_noise
+from Classes.Filter import Filter
+from Classes.FourierTransform import FourierTransform
+from Classes.Image import Image
+from Classes.AddNoise import AddNoise
 from PyQt5.uic import loadUiType
 import numpy as np
 
@@ -428,12 +431,12 @@ class ImageEditor(QMainWindow, ui):
         if self.noisy_img is not None:
             greyscale_image = self.img_obj.gray_scale_image
             if self.radio_uniform.isChecked():
-                self.noisy_img = add_uniform_noise(greyscale_image, self.slider_intensity.value())
+                self.noisy_img = AddNoise.add_uniform_noise(greyscale_image, self.slider_intensity.value())
             elif self.radio_gaus.isChecked():
-                self.noisy_img = add_gaussian_noise(greyscale_image, self.slider_mean.value(),
+                self.noisy_img = AddNoise.add_gaussian_noise(greyscale_image, self.slider_mean.value(),
                                                     self.slider_std.value())
             elif self.radio_sp.isChecked():
-                self.noisy_img = add_salt_and_pepper_noise(greyscale_image, self.slider_salt.value() / 100,
+                self.noisy_img = AddNoise.add_salt_and_pepper_noise(greyscale_image, self.slider_salt.value() / 100,
                                                            self.slider_pepper.value() / 100)
             else:
                 self.noisy_img = greyscale_image
