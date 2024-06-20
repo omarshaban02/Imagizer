@@ -2,6 +2,31 @@
 
 Imagizer is a desktop application built using PyQt to perform various image processing algorithms. It allows users to manipulate standard images (grayscale and color) with functionalities including noise addition, filtering, edge detection, histogram analysis, normalization, equalization, thresholding, color to grayscale conversion, frequency domain filtering, and hybrid image generation.
 
+## Table of Contents
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Features](#features)
+4. [Requirements](#requirements)
+5. [Contributors](#contributors)
+
+## Installation
+To install the project, clone the repository and install the dependencies:
+
+```bash
+# Clone the repository
+git clone https://github.com/Zoz-HF/Image_Descriptor
+
+# Navigate to the project directory
+cd Image_Descriptor
+```
+
+## Usage
+To run the application, use the following command:
+
+```bash
+python index.py
+```
+
 ## Features
 
 ### 1. Additive Noise
