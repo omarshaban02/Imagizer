@@ -10,14 +10,23 @@ Imagizer is a desktop application built using PyQt to perform various image proc
 5. [Contributors](#contributors)
 
 ## Installation
-To install the project, clone the repository and install the dependencies:
+To install the project, clone the repository and install the requirements:
 
 ```bash
 # Clone the repository
 git clone https://github.com/Zoz-HF/Image_Descriptor
-
+```
+```bash
 # Navigate to the project directory
 cd Image_Descriptor
+```
+```bash
+# Install the required packages:
+pip install -r requirements.txt
+```
+```bash
+# Run the application:
+python main.py
 ```
 
 ## Usage
