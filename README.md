@@ -6,7 +6,7 @@ Imagizer is a desktop application built using PyQt to perform various image proc
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Features](#features)
-4. [Requirements](#requirements)
+4. [Dependencies](#dependencies)
 5. [Contributors](#contributors)
 
 ## Installation
@@ -91,11 +91,12 @@ python index.py
    ![Hybrid Images](assets/gifs/Hybrid_image.gif)
 
 
-## Requirements
-
-- Python 3.x
+## Dependencies
+This project requires the following Python packages listed in the `requirements.txt` file:
 - PyQt5
-- OpenCV
+- opencv
+- numpy
+- scipy 
 
 ## Contributors
 
