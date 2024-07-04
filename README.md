@@ -98,7 +98,7 @@ This project requires the following Python packages listed in the `requirements.
 - numpy
 - scipy 
   
-## Contributors <a name = "Contributors"></a>
+## Contributors <a name = "contributors"></a>
 <table>
   <tr>
     <td align="center">
